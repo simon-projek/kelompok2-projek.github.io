@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MaMi Cafe | Quantum Experience</title>
+    <!-- FONT & ICONS -->
     <link
       href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;600;700&display=swap"
       rel="stylesheet"
@@ -12,6 +13,8 @@
       href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css"
       rel="stylesheet"
     />
+    <!-- ANIMATION LIBRARY (AOS) -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
     <style>
       :root {
         --bg-dark: #0a0a0f;
@@ -135,6 +138,245 @@
         opacity: 0 !important;
         visibility: hidden !important;
         pointer-events: none !important;
+      }
+
+      .navbar__extra {
+        margin-left: 2rem;
+      }
+      .cart-icon {
+        position: relative;
+        font-size: 1.8rem;
+        color: var(--text-dim);
+        transition: var(--transition-quantum);
+      }
+      .cart-icon:hover {
+        color: var(--accent-primary);
+        transform: scale(1.1);
+      }
+      .cart-badge {
+        position: absolute;
+        top: -5px;
+        right: -10px;
+        background: var(--accent-secondary);
+        color: var(--bg-dark);
+        font-size: 0.8rem;
+        font-weight: 700;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 10px var(--accent-secondary);
+        transition: transform 0.2s ease;
+      }
+
+      /* Product Card Additions */
+      .product-card__content {
+        padding-bottom: 2rem;
+      }
+      .product-card__price {
+        color: var(--text-dim);
+        font-size: 1.2rem;
+        margin-bottom: 1.5rem;
+      }
+      .product-card__buy-btn {
+        display: inline-block;
+        padding: 0.8rem 2rem;
+        border: 2px solid var(--accent-secondary);
+        border-radius: 50px;
+        color: var(--accent-secondary);
+        font-family: var(--font-display);
+        font-size: 1rem;
+        text-decoration: none;
+        position: relative;
+        overflow: hidden;
+        transition: var(--transition-quantum);
+        background: transparent;
+        cursor: pointer;
+        z-index: 5;
+      }
+      .product-card__buy-btn:hover {
+        color: var(--bg-dark);
+        background: var(--accent-secondary);
+        box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
+      }
+
+      /* Shopping Cart Modal */
+      .cart-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(10, 10, 15, 0.6);
+        backdrop-filter: blur(10px);
+        z-index: 1001;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+      }
+      .cart-modal.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      .cart-modal__content {
+        background: var(--bg-light);
+        border: 1px solid var(--border-color);
+        border-radius: 15px;
+        padding: 2.5rem;
+        width: 90%;
+        max-width: 500px;
+        position: relative;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        transform: scale(0.95);
+        transition: transform 0.3s ease;
+      }
+      .cart-modal.active .cart-modal__content {
+        transform: scale(1);
+      }
+      .cart-modal__title {
+        font-family: var(--font-display);
+        color: var(--accent-primary);
+        font-size: 2.5rem;
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+      .cart-modal__close {
+        position: absolute;
+        top: 1rem;
+        right: 1.5rem;
+        background: none;
+        border: none;
+        color: var(--text-dim);
+        font-size: 2.5rem;
+        cursor: pointer;
+        transition: var(--transition-quantum);
+      }
+      .cart-modal__close:hover {
+        color: var(--accent-primary);
+        transform: rotate(90deg);
+      }
+      #cart-items-container {
+        max-height: 40vh;
+        overflow-y: auto;
+        padding-right: 1rem;
+        margin-bottom: 1.5rem;
+      }
+      .cart-item {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        border-bottom: 1px solid var(--border-color);
+        padding: 1.2rem 0;
+      }
+      .cart-item:last-child {
+        border-bottom: none;
+      }
+      .cart-item img {
+        width: 70px;
+        height: 70px;
+        object-fit: cover;
+        border-radius: 10px;
+      }
+      .cart-item__info {
+        flex-grow: 1;
+      }
+      .cart-item__info h4 {
+        color: var(--text-light);
+        font-size: 1.2rem;
+      }
+      .cart-item__info p {
+        color: var(--text-dim);
+        font-size: 1rem;
+      }
+      .cart-item__actions {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .cart-item__actions button {
+        background: var(--bg-dark);
+        border: 1px solid var(--border-color);
+        color: var(--text-dim);
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: 0.2s ease;
+      }
+      .cart-item__actions button:hover {
+        background: var(--accent-primary);
+        color: var(--bg-dark);
+      }
+      .cart-modal__summary {
+        text-align: right;
+        font-size: 1.5rem;
+        margin-top: 2rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--border-color);
+      }
+      .cart-modal__checkout-btn {
+        width: 100%;
+        padding: 1rem;
+        font-size: 1.2rem;
+        font-family: var(--font-display);
+        background: var(--gradient-primary);
+        color: var(--bg-dark);
+        border: none;
+        border-radius: 10px;
+        margin-top: 1.5rem;
+        cursor: pointer;
+        transition: var(--transition-quantum);
+      }
+      .cart-modal__checkout-btn:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--neon-glow);
+      }
+
+      /* Testimonials */
+      .testimonial-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 4rem auto 0;
+      }
+      .testimonial-card {
+        background: rgba(26, 26, 36, 0.8);
+        border: 1px solid var(--border-color);
+        padding: 2.5rem;
+        border-radius: 20px;
+        backdrop-filter: blur(10px);
+        text-align: left;
+      }
+      .testimonial-card p {
+        font-style: italic;
+        color: var(--text-dim);
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+        line-height: 1.7;
+        border-left: 3px solid var(--accent-primary);
+        padding-left: 1.5rem;
+      }
+      .testimonial-card h4 {
+        text-align: right;
+        color: var(--accent-primary);
+        font-family: var(--font-display);
+        font-size: 1.2rem;
+      }
+
+      /* Utility */
+      @media (max-width: 768px) {
+        .navbar__menu {
+          display: none; /* Already exists but good to ensure */
+        }
+        .navbar__extra {
+          margin-left: auto; /* Push cart icon to the right */
+        }
       }
 
       .navbar {
@@ -674,6 +916,12 @@
         <a href="#" data-target="page-menu">Menu</a>
         <a href="#" data-target="page-home-kontak">Kontak</a>
       </nav>
+      <div class="navbar__extra">
+        <a href="#" id="cart-button" class="cart-icon">
+          <i class="ri-shopping-cart-2-line"></i>
+          <span class="cart-badge">0</span>
+        </a>
+      </div>
     </header>
 
     <main id="page-home">
@@ -691,7 +939,7 @@
           >
         </div>
       </section>
-      <section id="tentang" class="content-section">
+      <section id="tentang" class="content-section" data-aos="fade-in">
         <h2 class="content-section__title">Tentang Kami</h2>
         <p>
           MaMi Cafe adalah tempat nongkrong cozy dan santai, dengan berbagai
@@ -712,7 +960,11 @@
             align-items: flex-start;
           "
         >
-          <div class="vm-column" style="flex: 1; text-align: left">
+          <div
+            class="vm-column"
+            style="flex: 1; text-align: left"
+            data-aos="fade-right"
+          >
             <h3
               style="
                 color: var(--accent-primary);
@@ -784,7 +1036,11 @@
               </li>
             </ul>
           </div>
-          <div class="vm-column" style="flex: 1; text-align: left">
+          <div
+            class="vm-column"
+            style="flex: 1; text-align: left"
+            data-aos="fade-left"
+          >
             <h3
               style="
                 color: var(--accent-primary);
@@ -870,7 +1126,54 @@
         <h1 class="content-section__title">Menu Favorit</h1>
       </section>
       <section class="product-grid"></section>
+      <section id="testimonials" class="content-section">
+        <h2 class="content-section__title">Kata Mereka</h2>
+        <div class="testimonial-grid">
+          <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
+            <p>
+              "Quantum Quencher-nya benar-benar mengubah cara saya berpikir.
+              Fokus langsung meningkat! Ini bukan sekadar sirup, ini *nootropic*
+              cair."
+            </p>
+            <h4>- Alex P., *Biohacker*</h4>
+          </div>
+          <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
+            <p>
+              "Graviton Fries punya rasio renyah dan lembut yang sempurna secara
+              matematis. Setiap gigitan terasa seperti menghitung *Golden
+              Ratio*."
+            </p>
+            <h4>- Dr. Rina S., *Ahli Fisika Kuliner*</h4>
+          </div>
+          <div class="testimonial-card" data-aos="fade-up" data-aos-delay="300">
+            <p>
+              "Setelah minum Chrono Fusion Tea, deadline terasa lebih lambat.
+              Efisiensi kerja saya naik 200%. MaMi Cafe meretas waktu."
+            </p>
+            <h4>- Budi W., *Startup Founder*</h4>
+          </div>
+        </div>
+      </section>
     </main>
+
+    <div class="cart-modal" id="cart-modal">
+      <div class="cart-modal__content">
+        <h2 class="cart-modal__title">Keranjang Anda</h2>
+        <button class="cart-modal__close" id="cart-close-button">
+          &times;
+        </button>
+        <div id="cart-items-container">
+          <!-- Item keranjang akan di-generate oleh JavaScript di sini -->
+        </div>
+        <div class="cart-modal__summary">
+          <strong>Total:</strong>
+          <span id="cart-total-price">Rp 0</span>
+        </div>
+        <button class="cart-modal__checkout-btn" id="checkout-button">
+          Proses Pesanan
+        </button>
+      </div>
+    </div>
 
     <footer class="footer">
       <div class="social-links">
@@ -880,12 +1183,21 @@
       <p>© 2025 MaMi Cafe Quantum. Masa depan ada di sini.</p>
     </footer>
 
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
       ;(function () {
         'use strict'
 
+        // ======== PUSAT KONTROL APLIKASI ========
+
         const loadingGate = document.getElementById('loading-gate')
         const progressFill = document.getElementById('progress-fill')
+
+        // Inisialisasi Keranjang Belanja
+        // Menggunakan localStorage untuk menyimpan data meski halaman di-refresh.
+        let cart = JSON.parse(localStorage.getItem('MaMiCafeCart')) || []
+
+        // ======== FUNGSI INTI (Core Functions) ========
 
         function initializeSystem() {
           let progress = 0
@@ -910,6 +1222,7 @@
           loadingSimulation()
         }
 
+        // Menampilkan halaman yang ditargetkan
         function showPage(targetId) {
           document
             .querySelectorAll('main[id^="page-"]')
@@ -918,7 +1231,16 @@
           if (targetPage) targetPage.classList.remove('page-hidden')
         }
 
+        // Logika dan efek visual halaman
         function initPageLogic() {
+          // Inisialisasi AOS (Animate On Scroll) Library
+          AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true,
+          })
+
+          // IntersectionObserver untuk efek 'visible' lama (bisa dihapus jika semua sudah pakai AOS)
           const observer = new IntersectionObserver(
             (entries) => {
               entries.forEach((entry) => {
@@ -930,13 +1252,13 @@
             },
             { threshold: 0.1 }
           )
-
           document
             .querySelectorAll(
-              '.product-card, .hero__title, .hero__subtitle, .hero__cta, .content-section'
+              '.product-card, .hero__title, .hero__subtitle, .hero__cta'
             )
             .forEach((el) => observer.observe(el))
 
+          // Efek paralaks pada background hero
           const heroBg = document.getElementById('hero-bg')
           if (heroBg) {
             window.addEventListener('mousemove', (e) => {
@@ -946,6 +1268,7 @@
             })
           }
 
+          // Efek navbar saat di-scroll
           const navbar = document.getElementById('navbar')
           if (navbar) {
             window.addEventListener('scroll', () => {
@@ -954,62 +1277,251 @@
           }
         }
 
+        // Membangun daftar produk dari data source
         function populateCatalogs() {
           const productGrid = document.querySelector('#page-menu .product-grid')
           if (!productGrid) return
 
+          // SUMBER DATA PRODUK (DESKRIPSI TELAH DIREKAYASA ULANG)
           const productSource = [
             {
+              id: 1,
               img: 'assets/images/es-sirup.jpg',
-              name: 'Es Sirup Merah',
-              desc: 'Rp 13.000',
+              name: 'Es Sirup Merah Delima Quantum',
+              desc: 'Sirup merah delima dengan Nootropic Infusion untuk meningkatkan fokus kognitif. Dirancang untuk bio-hacking produktivitas Anda.',
+              price: 13000,
             },
             {
+              id: 2,
               img: 'assets/images/kentang-goreng.jpg',
-              name: 'Kentang Goreng',
-              desc: 'Rp 11.000',
+              name: 'Gravitation Fries',
+              desc: 'Kentang impor yang dipotong presisi mengikuti Golden Ratio. Keseimbangan natrium-kalium optimal untuk energi seluler.',
+              price: 11000,
             },
             {
+              id: 3,
               img: 'assets/images/teh-manis.jpg',
-              name: 'Es Teh Manis',
-              desc: 'Rp 7.000',
+              name: 'Chrono Fusion Tea',
+              desc: 'Es teh dari daun teh Camellia Sinensis yang kaya antioksidan polifenol. Mampu mereset chrono-reseptor tubuh Anda.',
+              price: 7000,
             },
             {
+              id: 4,
               img: 'assets/images/crepe-roll.jpg',
-              name: 'Crepe Roll',
-              desc: 'Rp 15.000',
+              name: 'Dimensional Crepe Roll',
+              desc: 'Lapisan crepe tipis yang melipat ruang dan waktu. Isian krim partikel vanila dari Madagascar memberikan singularitas rasa.',
+              price: 15000,
             },
             {
+              id: 5,
               img: 'assets/images/oreo-ciskek-otmil.jpg',
-              name: 'Oreo Cheesecake Oatmeal',
-              desc: 'Rp 25.000',
+              name: 'Nebula Cheesecake Oatmeal',
+              desc: 'Puding oat dengan pusaran cheesecake galaksi dan asteroid Oreo. Mengandung asam amino esensial untuk konstruksi realitas.',
+              price: 25000,
             },
           ]
 
           productGrid.innerHTML = productSource
             .map(
               (p) => `
-            <div class="product-card">
+            <div class="product-card" data-aos="fade-up">
                 <img src="${p.img}" alt="${p.name}" loading="lazy">
                 <div class="product-card__content">
                     <h3 class="product-card__name">${p.name}</h3>
-                    <p>${p.desc}</p>
+                    <p class="product-card__desc">${p.desc}</p>
+                    <p class="product-card__price">Rp ${p.price.toLocaleString(
+                      'id-ID'
+                    )}</p>
+                    <button class="product-card__buy-btn" data-id="${
+                      p.id
+                    }">PESAN</button>
                 </div>
             </div>`
             )
             .join('')
+
+          // Menambahkan Event Listener untuk tombol "PESAN"
+          document
+            .querySelectorAll('.product-card__buy-btn')
+            .forEach((button) => {
+              button.addEventListener('click', () => {
+                const id = parseInt(button.dataset.id)
+                const product = productSource.find((p) => p.id === id)
+                addToCart(product)
+              })
+            })
         }
+
+        // ======== FUNGSI KERANJANG BELANJA (Cart Functions) ========
+
+        function saveCart() {
+          localStorage.setItem('MaMiCafeCart', JSON.stringify(cart))
+        }
+
+        function addToCart(product) {
+          const existingItem = cart.find((item) => item.id === product.id)
+          if (existingItem) {
+            existingItem.quantity++
+          } else {
+            cart.push({ ...product, quantity: 1 })
+          }
+          saveCart()
+          renderCart()
+          updateCartIcon()
+          // Feedback visual saat item ditambahkan
+          const cartIcon = document.getElementById('cart-button')
+          cartIcon.style.transform = 'scale(1.2)'
+          setTimeout(() => {
+            cartIcon.style.transform = 'scale(1)'
+          }, 200)
+        }
+
+        function updateCart(id, change) {
+          const item = cart.find((item) => item.id === id)
+          if (item) {
+            item.quantity += change
+            if (item.quantity <= 0) {
+              cart = cart.filter((item) => item.id !== id)
+            }
+          }
+          saveCart()
+          renderCart()
+          updateCartIcon()
+        }
+
+        function renderCart() {
+          const cartContainer = document.getElementById('cart-items-container')
+          const cartTotalElem = document.getElementById('cart-total-price')
+
+          if (cart.length === 0) {
+            cartContainer.innerHTML =
+              '<p style="text-align: center; color: var(--text-dim);">Keranjang Anda kosong.</p>'
+            cartTotalElem.textContent = 'Rp 0'
+            return
+          }
+
+          cartContainer.innerHTML = cart
+            .map(
+              (item) => `
+            <div class="cart-item">
+                <img src="${item.img}" alt="${item.name}">
+                <div class="cart-item__info">
+                    <h4>${item.name}</h4>
+                    <p>Rp ${item.price.toLocaleString('id-ID')} x ${
+                item.quantity
+              }</p>
+                </div>
+                <div class="cart-item__actions">
+                    <button class="quantity-change" data-id="${
+                      item.id
+                    }" data-change="-1">-</button>
+                    <span>${item.quantity}</span>
+                    <button class="quantity-change" data-id="${
+                      item.id
+                    }" data-change="1">+</button>
+                </div>
+            </div>`
+            )
+            .join('')
+
+          const total = cart.reduce(
+            (sum, item) => sum + item.price * item.quantity,
+            0
+          )
+          cartTotalElem.textContent = `Rp ${total.toLocaleString('id-ID')}`
+
+          // Event listener untuk tombol +/- di keranjang
+          document.querySelectorAll('.quantity-change').forEach((button) => {
+            button.addEventListener('click', () => {
+              const id = parseInt(button.dataset.id)
+              const change = parseInt(button.dataset.change)
+              updateCart(id, change)
+            })
+          })
+        }
+
+        function updateCartIcon() {
+          const badge = document.querySelector('.cart-badge')
+          const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0)
+          badge.textContent = totalItems
+          badge.style.transform = 'scale(1.3)'
+          setTimeout(() => {
+            badge.style.transform = 'scale(1)'
+          }, 200)
+        }
+
+        function setupCartModal() {
+          const cartButton = document.getElementById('cart-button')
+          const closeButton = document.getElementById('cart-close-button')
+          const cartModal = document.getElementById('cart-modal')
+          const checkoutButton = document.getElementById('checkout-button')
+
+          cartButton.addEventListener('click', (e) => {
+            e.preventDefault()
+            renderCart()
+            cartModal.classList.add('active')
+          })
+
+          closeButton.addEventListener('click', () => {
+            cartModal.classList.remove('active')
+          })
+
+          cartModal.addEventListener('click', (e) => {
+            if (e.target === cartModal) {
+              // Hanya tutup jika klik di area luar konten
+              cartModal.classList.remove('active')
+            }
+          })
+
+          checkoutButton.addEventListener('click', () => {
+            if (cart.length === 0) {
+              alert('Keranjang Anda kosong!')
+              return
+            }
+            const total = cart.reduce(
+              (sum, item) => sum + item.price * item.quantity,
+              0
+            )
+            let message = 'Halo MaMi Cafe, saya ingin memesan:\n\n'
+            cart.forEach((item) => {
+              message += `${item.name} (x${item.quantity}) - Rp ${(
+                item.price * item.quantity
+              ).toLocaleString('id-ID')}\n`
+            })
+            message += `\n*Total: Rp ${total.toLocaleString('id-ID')}*`
+
+            const encodedMessage = encodeURIComponent(message)
+            // Ganti '6281234567890' dengan nomor WhatsApp target.
+            const whatsappURL = `https://wa.me/6282297970015?text=${encodedMessage}`
+
+            // Buka di tab baru, lebih efisien daripada alert.
+            window.open(whatsappURL, '_blank')
+
+            // Kosongkan keranjang setelah checkout (opsional, tapi disarankan)
+            cart = []
+            saveCart()
+            renderCart()
+            updateCartIcon()
+            cartModal.classList.remove('active')
+          })
+        }
+
+        // ======== EKSEKUSI UTAMA ========
 
         window.activateQuantumEffects = () => {
           populateCatalogs()
           initPageLogic()
+          setupCartModal()
+          updateCartIcon()
 
+          // Logika Navigasi Halaman
           document.querySelectorAll('[data-target]').forEach((link) => {
             link.addEventListener('click', (e) => {
               e.preventDefault()
               const target = e.currentTarget.dataset.target
-
+              document.body.style.transition = 'opacity 0.3s ease-out'
               document.body.style.opacity = '0'
+
               setTimeout(() => {
                 const targetPageId = target.startsWith('page-home-')
                   ? 'page-home'
@@ -1031,6 +1543,7 @@
           showPage('page-home')
         }
 
+        // Inisialisasi setelah DOM dimuat
         if (document.readyState === 'loading') {
           document.addEventListener('DOMContentLoaded', initializeSystem)
         } else {
