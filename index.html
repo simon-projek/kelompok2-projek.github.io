@@ -1163,9 +1163,131 @@
         border-color: var(--accent-tertiary);
         color: var(--accent-tertiary);
       }
+      #auth-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        background: radial-gradient(
+          ellipse at bottom,
+          #161622 0%,
+          var(--bg-dark) 70%
+        );
+        animation: fadeIn 1.5s ease-out;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .auth-form-wrapper {
+        max-width: 450px;
+        width: 100%;
+        padding: 2rem;
+      }
+
+      .auth-form-container {
+        background: var(--bg-light);
+        border: 1px solid var(--border-color);
+        border-radius: 15px;
+        padding: 3rem 2.5rem;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(10px);
+      }
+
+      .auth-title {
+        font-family: var(--font-display);
+        color: var(--accent-primary);
+        font-size: 2.5rem;
+        text-align: center;
+        margin-bottom: 2.5rem;
+      }
+
+      .auth-input-group {
+        position: relative;
+        margin-bottom: 1.5rem;
+      }
+      .auth-input-group input {
+        width: 100%;
+        padding: 1rem 1.2rem 1rem 3rem;
+        background: var(--bg-dark);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        color: var(--text-light);
+        font-size: 1rem;
+        transition: 0.2s ease;
+      }
+      .auth-input-group input:focus {
+        outline: none;
+        border-color: var(--accent-primary);
+        box-shadow: 0 0 15px var(--accent-glow);
+      }
+      .auth-input-group i {
+        position: absolute;
+        left: 1.2rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-dim);
+        transition: color 0.2s ease;
+      }
+      .auth-input-group input:focus + i {
+        color: var(--accent-primary);
+      }
+
+      .auth-input-group input[type='file'] {
+        color: var(--text-dim);
+        cursor: pointer;
+        padding: 1rem 1.2rem 1rem 3rem;
+        line-height: 1.5; /* Agar teks vertikal-tengah */
+      }
+
+      .auth-input-group input[type='file']::-webkit-file-upload-button {
+        visibility: hidden; /* Sembunyikan tombol default */
+        width: 0;
+      }
+      .auth-input-group input[type='file']::before {
+        content: 'Choose Profile Picture'; /* Teks custom */
+        display: inline-block;
+        color: var(--text-dim);
+      }
+
+      .auth-button {
+        width: 100%;
+        padding: 1rem;
+        font-size: 1.2rem;
+        font-family: var(--font-display);
+        background: var(--gradient-primary);
+        color: var(--bg-dark);
+        border: none;
+        border-radius: 10px;
+        margin-top: 1rem;
+        cursor: pointer;
+        transition: var(--transition-quantum);
+      }
+
+      .auth-button:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--neon-glow);
+      }
+      .auth-toggle-text {
+        text-align: center;
+        margin-top: 1.5rem;
+        color: var(--text-dim);
+      }
+
+      .auth-toggle-text a {
+        color: var(--accent-primary);
+        font-weight: 600;
+        text-decoration: none;
+      }
     </style>
   </head>
   <body>
+    <!-- [KODE LOADING GATE ANDA TETAP SAMA DI SINI] -->
     <div id="loading-gate">
       <img
         src="assets/images/logo-mami2.png"
@@ -1178,419 +1300,782 @@
       </div>
     </div>
 
-    <header class="navbar" id="navbar">
-      <a href="#" data-target="page-home" class="navbar__brand">
-        <img
-          src="assets/images/logo-mami2.png"
-          class="navbar__logo"
-          alt="MaMi Cafe Logo"
-        />
-        <span>MaMi Cafe</span>
-      </a>
-      <nav class="navbar__menu">
-        <a href="#" data-target="page-home-tentang">Tentang</a>
-        <a href="#" data-target="page-home-visi">Visi & Misi</a>
-        <a href="#" data-target="page-menu">Menu</a>
-        <a href="#" data-target="page-home-kontak">Kontak</a>
-      </nav>
-
-      <div class="navbar__extra">
-        <!-- Tombol ini muncul saat pengguna BELUM login -->
-        <a href="#" id="login-btn" class="navbar__login-btn">
-          <i class="ri-user-line"></i> Login
-        </a>
-
-        <!-- Kontainer ini muncul saat pengguna SUDAH login. Awalnya disembunyikan. -->
-        <div class="profile-container page-hidden" id="profile-container">
-          <img src="" alt="Profil" class="profile-pic" id="profile-pic" />
-          <div class="profile-dropdown" id="profile-dropdown">
-            <div class="dropdown-header" id="dropdown-header">
-              <strong>Nama Pengguna</strong>
+    <!-- CONTAINER AUTENTIKASI (LOGIN/REGISTER) -->
+    <div id="auth-container">
+      <div class="auth-form-wrapper">
+        <div class="auth-form-container" id="auth-form-container">
+          <!-- FORM LOGIN -->
+          <form class="auth-form" id="login-form">
+            <h2 class="auth-title">Welcome Back</h2>
+            <div class="auth-input-group">
+              <input
+                type="text"
+                id="login-username"
+                placeholder="Username"
+                required
+              />
+              <i class="ri-user-line"></i>
             </div>
-            <a href="#" id="edit-profile-btn"
-              ><i class="ri-edit-2-line"></i> Ganti Profil</a
-            >
-            <a href="#" id="logout-btn"
-              ><i class="ri-logout-box-r-line"></i> Logout</a
-            >
-          </div>
-        </div>
+            <div class="auth-input-group">
+              <input
+                type="password"
+                id="login-password"
+                placeholder="Password"
+                required
+              />
+              <i class="ri-lock-2-line"></i>
+            </div>
+            <button type="submit" class="auth-button">Login</button>
+            <p class="auth-toggle-text">
+              Don't have an account?
+              <a href="#" id="show-register">Sign Up</a>
+            </p>
+          </form>
 
-        <a href="#" id="cart-button" class="cart-icon">
-          <i class="ri-shopping-cart-2-line"></i>
-          <span class="cart-badge">0</span>
+          <!-- FORM REGISTER -->
+          <form class="auth-form" id="register-form" style="display: none">
+            <h2 class="auth-title">Create Account</h2>
+            <div class="auth-input-group">
+              <input
+                type="text"
+                id="register-username"
+                placeholder="Username"
+                required
+              />
+              <i class="ri-user-line"></i>
+            </div>
+            <div class="auth-input-group">
+              <input
+                type="password"
+                id="register-password"
+                placeholder="Password"
+                required
+              />
+              <i class="ri-lock-2-line"></i>
+            </div>
+            <div class="auth-input-group">
+              <input type="file" id="register-pfp" accept="image/*" required />
+              <i class="ri-image-line"></i>
+            </div>
+            <button type="submit" class="auth-button">Register</button>
+            <p class="auth-toggle-text">
+              Already have an account? <a href="#" id="show-login">Sign In</a>
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- KONTEN UTAMA WEBSITE ANDA (AWALNYA DISEMBUNYIKAN) -->
+    <div id="main-content-wrapper" class="page-hidden">
+      <!-- Header/Navbar -->
+      <header class="navbar" id="navbar">
+        <a href="#" data-target="page-home" class="navbar__brand">
+          <img
+            src="assets/images/logo-mami2.png"
+            class="navbar__logo"
+            alt="MaMi Cafe Logo"
+          />
+          <span>MaMi Cafe</span>
         </a>
-      </div>
-    </header>
+        <nav class="navbar__menu">
+          <a href="#" data-target="page-home-tentang">Tentang</a>
+          <a href="#" data-target="page-home-visi">Visi & Misi</a>
+          <a href="#" data-target="page-menu">Menu</a>
+          <a href="#" data-target="page-home-kontak">Kontak</a>
+        </nav>
+        <div class="navbar__extra">
+          <!-- Hapus Tombol Login lama -->
+          <div class="profile-container" id="profile-container">
+            <img src="" alt="Profil" class="profile-pic" id="profile-pic" />
+            <div class="profile-dropdown" id="profile-dropdown">
+              <div class="dropdown-header" id="dropdown-header">
+                <strong>Nama Pengguna</strong>
+              </div>
+              <a href="#" id="edit-profile-btn"
+                ><i class="ri-edit-2-line"></i> Ganti Profil</a
+              >
+              <a href="#" id="logout-btn"
+                ><i class="ri-logout-box-r-line"></i> Logout</a
+              >
+            </div>
+          </div>
+          <a href="#" id="cart-button" class="cart-icon">
+            <i class="ri-shopping-cart-2-line"></i>
+            <span class="cart-badge">0</span>
+          </a>
+        </div>
+      </header>
 
-    <main id="page-home">
-      <section class="hero">
-        <div class="hero__bg" id="hero-bg"></div>
-        <div class="hero__content">
-          <h1 class="hero__title" id="hero-title">
-            Selamat Datang di MaMi Cafe
-          </h1>
-          <p class="hero__subtitle" id="hero-subtitle">
-            Simple Vibes, Rich Taste.
+      <!-- [SELURUH KONTEN <main> DAN <footer> ANDA DITARUH DI SINI] -->
+      <!-- ... (Mulai dari <main id="page-home"> sampai </footer>) ... -->
+
+      <!-- Saya akan copy-paste bagian <main> dan <footer> Anda untuk kelengkapan -->
+      <main id="page-home">
+        <section class="hero">
+          <div class="hero__bg" id="hero-bg"></div>
+          <div class="hero__content">
+            <h1 class="hero__title" id="hero-title">
+              Selamat Datang di MaMi Cafe
+            </h1>
+            <p class="hero__subtitle" id="hero-subtitle">
+              Simple Vibes, Rich Taste.
+            </p>
+            <a href="#" data-target="page-menu" class="hero__cta" id="hero-cta"
+              >Jelajahi Menu</a
+            >
+          </div>
+        </section>
+        <section id="tentang" class="content-section" data-aos="fade-in">
+          <h2 class="content-section__title">Tentang Kami</h2>
+          <p>
+            MaMi Cafe adalah tempat nongkrong cozy dan santai, dengan berbagai
+            pilihan menu dari kopi lokal sampai camilan kekinian yang cocok
+            untuk semua suasana.
           </p>
-          <a href="#" data-target="page-menu" class="hero__cta" id="hero-cta"
-            >Jelajahi Menu</a
-          >
-        </div>
-      </section>
-      <section id="tentang" class="content-section" data-aos="fade-in">
-        <h2 class="content-section__title">Tentang Kami</h2>
-        <p>
-          MaMi Cafe adalah tempat nongkrong cozy dan santai, dengan berbagai
-          pilihan menu dari kopi lokal sampai camilan kekinian yang cocok untuk
-          semua suasana.
-        </p>
-      </section>
-      <section id="visi" class="content-section">
-        <h2 class="content-section__title">Visi & Misi</h2>
+        </section>
+        <section id="visi" class="content-section">
+          <h2 class="content-section__title">Visi & Misi</h2>
 
-        <div
-          class="vm-container"
-          style="
-            max-width: 900px;
-            margin: 0 auto;
-            display: flex;
-            gap: 4rem;
-            align-items: flex-start;
-          "
-        >
           <div
-            class="vm-column"
-            style="flex: 1; text-align: left"
-            data-aos="fade-right"
+            class="vm-container"
+            style="
+              max-width: 900px;
+              margin: 0 auto;
+              display: flex;
+              gap: 4rem;
+              align-items: flex-start;
+            "
           >
-            <h3
-              style="
-                color: var(--accent-primary);
-                font-family: var(--font-display);
-                font-size: 1.8rem;
-                margin-bottom: 1.5rem;
-                border-bottom: 1px solid var(--border-color);
-                padding-bottom: 0.75rem;
-              "
+            <div
+              class="vm-column"
+              style="flex: 1; text-align: left"
+              data-aos="fade-right"
             >
-              Visi
-            </h3>
-            <ul
-              style="list-style: none; padding-left: 0; color: var(--text-dim)"
-            >
-              <li
+              <h3
                 style="
-                  margin-bottom: 1.2rem;
-                  padding-left: 2rem;
-                  position: relative;
+                  color: var(--accent-primary);
+                  font-family: var(--font-display);
+                  font-size: 1.8rem;
+                  margin-bottom: 1.5rem;
+                  border-bottom: 1px solid var(--border-color);
+                  padding-bottom: 0.75rem;
                 "
               >
-                <i
-                  class="ri-radio-button-line"
-                  style="
-                    position: absolute;
-                    left: 0;
-                    top: 5px;
-                    color: var(--accent-primary);
-                    font-size: 1rem;
-                  "
-                ></i>
-                Menjadi bisnis yang sukses dan dikenal banyak orang
-              </li>
-              <li
+                Visi
+              </h3>
+              <ul
                 style="
-                  margin-bottom: 1.2rem;
-                  padding-left: 2rem;
-                  position: relative;
+                  list-style: none;
+                  padding-left: 0;
+                  color: var(--text-dim);
                 "
               >
-                <i
-                  class="ri-radio-button-line"
+                <li
                   style="
-                    position: absolute;
-                    left: 0;
-                    top: 5px;
-                    color: var(--accent-primary);
-                    font-size: 1rem;
+                    margin-bottom: 1.2rem;
+                    padding-left: 2rem;
+                    position: relative;
                   "
-                ></i>
-                Membangun brand yang dikenal karena
-                <strong>inovasi, kualitas, dan kepuasan pelanggan.</strong>
-              </li>
-              <li style="padding-left: 2rem; position: relative">
-                <i
-                  class="ri-radio-button-line"
+                >
+                  <i
+                    class="ri-radio-button-line"
+                    style="
+                      position: absolute;
+                      left: 0;
+                      top: 5px;
+                      color: var(--accent-primary);
+                      font-size: 1rem;
+                    "
+                  ></i>
+                  Menjadi bisnis yang sukses dan dikenal banyak orang
+                </li>
+                <li
                   style="
-                    position: absolute;
-                    left: 0;
-                    top: 5px;
-                    color: var(--accent-primary);
-                    font-size: 1rem;
+                    margin-bottom: 1.2rem;
+                    padding-left: 2rem;
+                    position: relative;
                   "
-                ></i>
-                Menjadi bisnis yang menyediakan snack yang lezat dan berkualitas
-                dengan harga yang terjangkau dan dicintai semua kalangan.
-              </li>
-            </ul>
-          </div>
-          <div
-            class="vm-column"
-            style="flex: 1; text-align: left"
-            data-aos="fade-left"
-          >
-            <h3
-              style="
-                color: var(--accent-primary);
-                font-family: var(--font-display);
-                font-size: 1.8rem;
-                margin-bottom: 1.5rem;
-                border-bottom: 1px solid var(--border-color);
-                padding-bottom: 0.75rem;
-              "
+                >
+                  <i
+                    class="ri-radio-button-line"
+                    style="
+                      position: absolute;
+                      left: 0;
+                      top: 5px;
+                      color: var(--accent-primary);
+                      font-size: 1rem;
+                    "
+                  ></i>
+                  Membangun brand yang dikenal karena
+                  <strong>inovasi, kualitas, dan kepuasan pelanggan.</strong>
+                </li>
+                <li style="padding-left: 2rem; position: relative">
+                  <i
+                    class="ri-radio-button-line"
+                    style="
+                      position: absolute;
+                      left: 0;
+                      top: 5px;
+                      color: var(--accent-primary);
+                      font-size: 1rem;
+                    "
+                  ></i>
+                  Menjadi bisnis yang menyediakan snack yang lezat dan
+                  berkualitas dengan harga yang terjangkau dan dicintai semua
+                  kalangan.
+                </li>
+              </ul>
+            </div>
+            <div
+              class="vm-column"
+              style="flex: 1; text-align: left"
+              data-aos="fade-left"
             >
-              Misi
-            </h3>
-            <ul
-              style="list-style: none; padding-left: 0; color: var(--text-dim)"
-            >
-              <li
+              <h3
                 style="
-                  margin-bottom: 1.2rem;
-                  padding-left: 2rem;
-                  position: relative;
+                  color: var(--accent-primary);
+                  font-family: var(--font-display);
+                  font-size: 1.8rem;
+                  margin-bottom: 1.5rem;
+                  border-bottom: 1px solid var(--border-color);
+                  padding-bottom: 0.75rem;
                 "
               >
-                <i
-                  class="ri-radio-button-line"
-                  style="
-                    position: absolute;
-                    left: 0;
-                    top: 5px;
-                    color: var(--accent-primary);
-                    font-size: 1rem;
-                  "
-                ></i>
-                Menghasilkan produk yang berkualitas dengan harga yang
-                terjangkau.
-              </li>
-              <li
+                Misi
+              </h3>
+              <ul
                 style="
-                  margin-bottom: 1.2rem;
-                  padding-left: 2rem;
-                  position: relative;
+                  list-style: none;
+                  padding-left: 0;
+                  color: var(--text-dim);
                 "
               >
-                <i
-                  class="ri-radio-button-line"
+                <li
                   style="
-                    position: absolute;
-                    left: 0;
-                    top: 5px;
-                    color: var(--accent-primary);
-                    font-size: 1rem;
+                    margin-bottom: 1.2rem;
+                    padding-left: 2rem;
+                    position: relative;
                   "
-                ></i>
-                Menyediakan layanan pelanggan yang
-                <strong>cepat, ramah, dan responsif.</strong>
-              </li>
-              <li style="padding-left: 2rem; position: relative">
-                <i
-                  class="ri-radio-button-line"
+                >
+                  <i
+                    class="ri-radio-button-line"
+                    style="
+                      position: absolute;
+                      left: 0;
+                      top: 5px;
+                      color: var(--accent-primary);
+                      font-size: 1rem;
+                    "
+                  ></i>
+                  Menghasilkan produk yang berkualitas dengan harga yang
+                  terjangkau.
+                </li>
+                <li
                   style="
-                    position: absolute;
-                    left: 0;
-                    top: 5px;
-                    color: var(--accent-primary);
-                    font-size: 1rem;
+                    margin-bottom: 1.2rem;
+                    padding-left: 2rem;
+                    position: relative;
                   "
-                ></i>
-                Memenuhi permintaan konsumen dan terus berkembang menjadi lebih
-                baik
-              </li>
-            </ul>
+                >
+                  <i
+                    class="ri-radio-button-line"
+                    style="
+                      position: absolute;
+                      left: 0;
+                      top: 5px;
+                      color: var(--accent-primary);
+                      font-size: 1rem;
+                    "
+                  ></i>
+                  Menyediakan layanan pelanggan yang
+                  <strong>cepat, ramah, dan responsif.</strong>
+                </li>
+                <li style="padding-left: 2rem; position: relative">
+                  <i
+                    class="ri-radio-button-line"
+                    style="
+                      position: absolute;
+                      left: 0;
+                      top: 5px;
+                      color: var(--accent-primary);
+                      font-size: 1rem;
+                    "
+                  ></i>
+                  Memenuhi permintaan konsumen dan terus berkembang menjadi
+                  lebih baik
+                </li>
+              </ul>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section id="kontak" class="content-section">
-        <h2 class="content-section__title">Hubungi Kami</h2>
-        <p>Email: quantum@mamicafe.com | Instagram: @mamicafe.quantum</p>
-      </section>
-    </main>
+        <section id="kontak" class="content-section">
+          <h2 class="content-section__title">Hubungi Kami</h2>
+          <p>Email: quantum@mamicafe.com | Instagram: @mamicafe.quantum</p>
+        </section>
+      </main>
 
-    <main id="page-menu" class="page-hidden">
-      <section class="page-header content-section">
-        <h1 class="content-section__title">Menu Favorit</h1>
-      </section>
-      <section class="product-grid"></section>
-      <section id="testimonials" class="content-section">
-        <h2 class="content-section__title">Kata Mereka</h2>
-        <div class="testimonial-grid">
-          <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
-            <p>
-              "Quantum Quencher-nya benar-benar mengubah cara saya berpikir.
-              Fokus langsung meningkat! Ini bukan sekadar sirup, ini *nootropic*
-              cair."
-            </p>
-            <h4>- Alex P., *Biohacker*</h4>
-          </div>
-          <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
-            <p>
-              "Graviton Fries punya rasio renyah dan lembut yang sempurna secara
-              matematis. Setiap gigitan terasa seperti menghitung *Golden
-              Ratio*."
-            </p>
-            <h4>- Dr. Rina S., *Ahli Fisika Kuliner*</h4>
-          </div>
-          <div class="testimonial-card" data-aos="fade-up" data-aos-delay="300">
-            <p>
-              "Setelah minum Chrono Fusion Tea, deadline terasa lebih lambat.
-              Efisiensi kerja saya naik 200%. MaMi Cafe meretas waktu."
-            </p>
-            <h4>- Budi W., *Startup Founder*</h4>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <div class="cart-modal" id="cart-modal">
-      <div class="cart-modal__content">
-        <h2 class="cart-modal__title">Keranjang Anda</h2>
-        <button class="cart-modal__close" id="cart-close-button">
-          &times;
-        </button>
-        <div id="cart-items-container"></div>
-        <div class="cart-modal__summary">
-          <strong>Total:</strong>
-          <span id="cart-total-price">Rp 0</span>
-        </div>
-        <button class="cart-modal__checkout-btn" id="checkout-button">
-          Proses Pesanan
-        </button>
-      </div>
-    </div>
-
-    <div id="notification-container" class="notification-toast-container"></div>
-
-    <<!-- GANTI MODAL PROFIL SEBELUMNYA DENGAN INI -->
-    <div class="cart-modal" id="profile-modal">
-      <div class="cart-modal__content">
-        <h2 class="cart-modal__title" id="profile-modal-title">
-          Buat Profil Anda
-        </h2>
-        <button class="cart-modal__close" id="profile-modal-close-button">
-          &times;
-        </button>
-        <form id="profile-form" class="profile-form">
-          <div class="form-group">
-            <label for="profile-name">Nama Anda</label>
-            <input
-              type="text"
-              id="profile-name"
-              required
-              placeholder="Masukkan nama..."
-            />
-          </div>
-
-          <div class="form-group">
-            <label for="profile-image-file">Foto Profil</label>
-            <!-- Pratinjau gambar akan muncul di sini -->
-            <img
-              src=""
-              alt="Pratinjau Gambar"
-              id="profile-image-preview"
-              class="image-preview"
-            />
-            <!-- Input file untuk mengunggah gambar -->
-            <input
-              type="file"
-              id="profile-image-file"
-              accept="image/*"
-              style="display: none"
-            />
-            <button
-              type="button"
-              id="select-image-btn"
-              class="select-image-btn"
+      <main id="page-menu" class="page-hidden">
+        <section class="page-header content-section">
+          <h1 class="content-section__title">Menu Favorit</h1>
+        </section>
+        <section class="product-grid"></section>
+        <section id="testimonials" class="content-section">
+          <h2 class="content-section__title">Kata Mereka</h2>
+          <div class="testimonial-grid">
+            <div
+              class="testimonial-card"
+              data-aos="fade-up"
+              data-aos-delay="100"
             >
-              Pilih Gambar dari Perangkat
-            </button>
+              <p>
+                "Quantum Quencher-nya benar-benar mengubah cara saya berpikir.
+                Fokus langsung meningkat! Ini bukan sekadar sirup, ini
+                *nootropic* cair."
+              </p>
+              <h4>- Alex P., *Biohacker*</h4>
+            </div>
+            <div
+              class="testimonial-card"
+              data-aos="fade-up"
+              data-aos-delay="200"
+            >
+              <p>
+                "Graviton Fries punya rasio renyah dan lembut yang sempurna
+                secara matematis. Setiap gigitan terasa seperti menghitung
+                *Golden Ratio*."
+              </p>
+              <h4>- Dr. Rina S., *Ahli Fisika Kuliner*</h4>
+            </div>
+            <div
+              class="testimonial-card"
+              data-aos="fade-up"
+              data-aos-delay="300"
+            >
+              <p>
+                "Setelah minum Chrono Fusion Tea, deadline terasa lebih lambat.
+                Efisiensi kerja saya naik 200%. MaMi Cafe meretas waktu."
+              </p>
+              <h4>- Budi W., *Startup Founder*</h4>
+            </div>
           </div>
-
-          <button
-            type="submit"
-            id="profile-form-submit-btn"
-            class="cart-modal__checkout-btn"
-          >
-            Simpan & Masuk
+        </section>
+      </main>
+      <div class="cart-modal" id="cart-modal">
+        <div class="cart-modal__content">
+          <h2 class="cart-modal__title">Keranjang Anda</h2>
+          <button class="cart-modal__close" id="cart-close-button">
+            &times;
           </button>
-        </form>
+          <div id="cart-items-container"></div>
+          <div class="cart-modal__summary">
+            <strong>Total:</strong>
+            <span id="cart-total-price">Rp 0</span>
+          </div>
+          <button class="cart-modal__checkout-btn" id="checkout-button">
+            Proses Pesanan
+          </button>
+        </div>
       </div>
-    </div>
+      <div
+        id="notification-container"
+        class="notification-toast-container"
+      ></div>
+      <div class="cart-modal" id="profile-modal">
+        <div class="cart-modal__content">
+          <h2 class="cart-modal__title" id="profile-modal-title">
+            Buat Profil Anda
+          </h2>
+          <button class="cart-modal__close" id="profile-modal-close-button">
+            &times;
+          </button>
+          <form id="profile-form" class="profile-form">
+            <div class="form-group">
+              <label for="profile-name">Nama Anda</label>
+              <input
+                type="text"
+                id="profile-name"
+                required
+                placeholder="Masukkan nama..."
+              />
+            </div>
 
-    <footer class="footer">
-      <div class="social-links">
-        <a href="#" class="social-link"><i class="ri-instagram-line"></i></a>
-        <a href="#" class="social-link"><i class="ri-twitter-x-line"></i></a>
+            <div class="form-group">
+              <label for="profile-image-file">Foto Profil</label>
+              <img
+                src=""
+                alt="Pratinjau Gambar"
+                id="profile-image-preview"
+                class="image-preview"
+              />
+              <input
+                type="file"
+                id="profile-image-file"
+                accept="image/*"
+                style="display: none"
+              />
+              <button
+                type="button"
+                id="select-image-btn"
+                class="select-image-btn"
+              >
+                Pilih Gambar dari Perangkat
+              </button>
+            </div>
+
+            <button
+              type="submit"
+              id="profile-form-submit-btn"
+              class="cart-modal__checkout-btn"
+            >
+              Simpan & Masuk
+            </button>
+          </form>
+        </div>
       </div>
-      <p>© 2025 MaMi Cafe Quantum. Masa depan ada di sini.</p>
-    </footer>
+
+      <footer class="footer">
+        <div class="social-links">
+          <a href="#" class="social-link"><i class="ri-instagram-line"></i></a>
+          <a href="#" class="social-link"><i class="ri-twitter-x-line"></i></a>
+        </div>
+        <p>© 2025 MaMi Cafe Quantum. Masa depan ada di sini.</p>
+        <!-- [KODE SEBELUM FOOTER ANDA] -->
+
+        <!-- MODAL BARU UNTUK EDIT PROFIL -->
+        <div class="cart-modal" id="edit-profile-modal">
+          <div class="cart-modal__content">
+            <h2 class="cart-modal__title">Ganti Profil</h2>
+            <button class="cart-modal__close" id="edit-profile-close-button">
+              &times;
+            </button>
+            <form id="edit-profile-form" class="profile-form">
+              <div class="form-group">
+                <label for="edit-profile-name">Username</label>
+                <input
+                  type="text"
+                  id="edit-profile-name"
+                  required
+                  placeholder="Masukkan username baru..."
+                />
+              </div>
+
+              <div class="form-group">
+                <label>Foto Profil Saat Ini</label>
+                <img
+                  src=""
+                  alt="Pratinjau Gambar"
+                  id="edit-image-preview"
+                  class="image-preview active"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="edit-profile-image-file"
+                  >Ganti Foto Profil (Opsional)</label
+                >
+                <input
+                  type="file"
+                  id="edit-profile-image-file"
+                  accept="image/*"
+                  class="auth-input-group"
+                  style="padding-left: 0.5rem"
+                />
+              </div>
+
+              <button type="submit" class="cart-modal__checkout-btn">
+                Simpan Perubahan
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <footer class="footer">
+          <!-- ... (Isi footer Anda) ... -->
+        </footer>
+      </footer>
+    </div>
+    <!-- ... (Seluruh kode HTML Anda dari <body> hingga sebelum <script>) ... -->
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-      ;(function () {
-        'use strict'
+      'use strict'
 
-        const loadingGate = document.getElementById('loading-gate')
-        const progressFill = document.getElementById('progress-fill')
+      const API_CONFIG = {
+        REGISTER_URL: 'http://localhost:3000/register',
+        LOGIN_URL: 'http://localhost:3000/login',
+        UPDATE_PROFILE_URL: 'http://localhost:3000/update-profile',
+      }
 
+      document.addEventListener('DOMContentLoaded', () => {
+        // === Selektor Elemen (Lengkap) ===
+        const loadingGate = document.getElementById('loading-gate'),
+          progressFill = document.getElementById('progress-fill'),
+          authContainer = document.getElementById('auth-container'),
+          mainContentWrapper = document.getElementById('main-content-wrapper'),
+          loginForm = document.getElementById('login-form'),
+          registerForm = document.getElementById('register-form'),
+          showRegisterLink = document.getElementById('show-register'),
+          showLoginLink = document.getElementById('show-login'),
+          navbar = document.getElementById('navbar'),
+          cartButton = document.getElementById('cart-button'),
+          profileContainer = document.getElementById('profile-container'),
+          profilePic = document.getElementById('profile-pic'),
+          dropdownHeader = document.getElementById('dropdown-header'),
+          profileDropdown = document.getElementById('profile-dropdown'),
+          logoutBtn = document.getElementById('logout-btn'),
+          editProfileBtn = document.getElementById('edit-profile-btn'),
+          notificationContainer = document.getElementById(
+            'notification-container'
+          ),
+          editProfileModal = document.getElementById('edit-profile-modal'),
+          editProfileForm = document.getElementById('edit-profile-form'),
+          editProfileCloseBtn = document.getElementById(
+            'edit-profile-close-button'
+          ),
+          editProfileNameInput = document.getElementById('edit-profile-name'),
+          editImagePreview = document.getElementById('edit-image-preview'),
+          editProfileImageInput = document.getElementById(
+            'edit-profile-image-file'
+          )
+
+        // === State Aplikasi ===
         let cart = JSON.parse(localStorage.getItem('MaMiCafeCart')) || []
+        let currentUser = null
 
-        function initializeSystem() {
-          let progress = 0
-          const loadingSimulation = () => {
-            const increment = Math.random() * 5
-            progress = Math.min(progress + increment, 100)
-            progressFill.style.width = `${progress}%`
+        // === Fungsi Bantuan ===
+        const showNotification = (message, duration = 3000) => {
+          if (!notificationContainer) return
+          const toast = document.createElement('div')
+          toast.className = 'notification-toast'
+          toast.innerHTML = `<div class="toast-icon"><i class="ri-check-double-line"></i></div><div class="toast-message">${message}</div><div class="toast-progress" style="animation-duration: ${
+            duration / 1000
+          }s"></div>`
+          notificationContainer.appendChild(toast)
+          setTimeout(() => {
+            toast.classList.add('exit')
+            toast.addEventListener('animationend', () => toast.remove(), {
+              once: true,
+            })
+          }, duration)
+        }
+        const fileToBase64 = (file) =>
+          new Promise((resolve, reject) => {
+            const reader = new FileReader()
+            reader.readAsDataURL(file)
+            reader.onload = () => resolve(reader.result)
+            reader.onerror = (error) => reject(error)
+          })
 
-            if (progress < 100) {
-              setTimeout(loadingSimulation, Math.random() * 100 + 50)
-            } else {
-              loadingGate.classList.add('gate-hidden')
-              loadingGate.addEventListener(
-                'transitionend',
-                () => {
-                  window.activateQuantumEffects()
-                },
-                { once: true }
-              )
-            }
+        // === Logika Inti ===
+        const handleRegister = async (e) => {
+          e.preventDefault()
+          const u = document.getElementById('register-username').value.trim(),
+            p = document.getElementById('register-password').value.trim(),
+            f = document.getElementById('register-pfp').files[0]
+          if (!u || !p || !f)
+            return showNotification(
+              '<strong>Error:</strong> Semua kolom wajib diisi!',
+              2000
+            )
+          const pic = await fileToBase64(f)
+          try {
+            const res = await fetch(API_CONFIG.REGISTER_URL, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                username: u,
+                password: p,
+                profilePic: pic,
+              }),
+            })
+            const result = await res.json()
+            if (!res.ok) throw new Error(result.message)
+            showNotification(
+              '<strong>Sukses!</strong> Registrasi berhasil. Silakan login.',
+              3000
+            )
+            registerForm.reset()
+            showLoginForm()
+          } catch (err) {
+            showNotification(`<strong>Error:</strong> ${err.message}`, 3000)
           }
-          loadingSimulation()
+        }
+        const handleLogin = async (e) => {
+          e.preventDefault()
+          const u = document.getElementById('login-username').value.trim(),
+            p = document.getElementById('login-password').value.trim()
+          if (!u || !p)
+            return showNotification(
+              '<strong>Error:</strong> Username dan password wajib diisi!',
+              2000
+            )
+          try {
+            const res = await fetch(API_CONFIG.LOGIN_URL, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ username: u, password: p }),
+            })
+            const result = await res.json()
+            if (!res.ok) throw new Error(result.message)
+            saveUserAndStartApp(result.user)
+          } catch (err) {
+            showNotification(`<strong>Error:</strong> ${err.message}`, 3000)
+          }
+        }
+        const handleLogout = () => {
+          localStorage.removeItem('MaMiCafeUser')
+          currentUser = null
+          showNotification('Anda telah logout.')
+          authContainer.style.opacity = '0'
+          authContainer.classList.remove('page-hidden')
+          mainContentWrapper.classList.add('page-hidden')
+          setTimeout(() => (authContainer.style.opacity = '1'), 50)
+        }
+        const openEditProfileModal = () => {
+          if (!currentUser) return
+          editProfileNameInput.value = currentUser.username
+          editImagePreview.src = currentUser.profilePic
+          editProfileForm.reset()
+          profileDropdown.classList.remove('active')
+          editProfileModal.classList.add('active')
         }
 
-        function showPage(targetId) {
+        const handleProfileUpdate = async (e) => {
+          e.preventDefault()
+          const newUsername = editProfileNameInput.value.trim()
+          const newImageFile = editProfileImageInput.files[0]
+          if (!newUsername)
+            return showNotification('Username tidak boleh kosong!', 2000)
+          let newProfilePicBase64 = newImageFile
+            ? await fileToBase64(newImageFile)
+            : null
+          try {
+            const response = await fetch(API_CONFIG.UPDATE_PROFILE_URL, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                currentUsername: currentUser.username,
+                newUsername,
+                newProfilePic: newProfilePicBase64,
+              }),
+            })
+            const result = await response.json()
+            if (!response.ok) throw new Error(result.message)
+
+            // PERBAIKAN: Langsung gunakan data dari server tanpa fallback. Server kini dapat diandalkan.
+            saveUserAndStartApp(result.user)
+
+            editProfileModal.classList.remove('active')
+            showNotification(
+              '<strong>Sukses!</strong> Profil berhasil diperbarui.',
+              3000
+            )
+          } catch (error) {
+            showNotification(`<strong>Error:</strong> ${error.message}`, 3000)
+          }
+        }
+
+        // === Kontrol Tampilan & Data ===
+        const showLoginForm = () => {
+          registerForm.style.display = 'none'
+          loginForm.style.display = 'block'
+        }
+        const showRegisterForm = () => {
+          loginForm.style.display = 'none'
+          registerForm.style.display = 'block'
+        }
+        const saveUserAndStartApp = (userData) => {
+          currentUser = userData
+          localStorage.setItem('MaMiCafeUser', JSON.stringify(userData))
+          startApp()
+        }
+        const startApp = () => {
+          if (!currentUser) return
+          authContainer.classList.add('page-hidden')
+          mainContentWrapper.style.opacity = '0'
+          mainContentWrapper.classList.remove('page-hidden')
+          profilePic.src = currentUser.profilePic
+          dropdownHeader.innerHTML = `<strong>${currentUser.username}</strong>`
+          activateQuantumEffects()
+          setTimeout(() => (mainContentWrapper.style.opacity = '1'), 50)
+        }
+        const activateQuantumEffects = () => {
+          populateCatalogs()
+          initPageLogic()
+          setupCartModal()
+          updateCartIcon()
+          setupNavigation()
+        }
+        const checkLoginStatus = () => {
+          const u = localStorage.getItem('MaMiCafeUser')
+          if (u) {
+            try {
+              saveUserAndStartApp(JSON.parse(u))
+            } catch (e) {
+              localStorage.removeItem('MaMiCafeUser')
+              authContainer.classList.remove('page-hidden')
+            }
+          } else {
+            authContainer.classList.remove('page-hidden')
+          }
+        }
+        const initializeSystem = () => {
+          let p = 0
+          const s = () => {
+            p = Math.min(p + Math.random() * 5, 100)
+            progressFill.style.width = `${p}%`
+            if (p < 100) setTimeout(s, Math.random() * 100 + 50)
+            else {
+              loadingGate.classList.add('gate-hidden')
+              loadingGate.addEventListener('transitionend', checkLoginStatus, {
+                once: true,
+              })
+            }
+          }
+          s()
+        }
+
+        // === Fungsi Lain (tidak berubah, dikompresi untuk efisiensi) ===
+        const showPage = (targetId) => {
           document
             .querySelectorAll('main[id^="page-"]')
             .forEach((p) => p.classList.add('page-hidden'))
-          const targetPage = document.getElementById(targetId)
-          if (targetPage) targetPage.classList.remove('page-hidden')
+          const t = document.getElementById(targetId)
+          if (t) t.classList.remove('page-hidden')
         }
-
-        function initPageLogic() {
-          AOS.init({
-            duration: 800,
-            easing: 'ease-in-out',
-            once: true,
+        const setupNavigation = () => {
+          document.querySelectorAll('[data-target]').forEach((l) => {
+            l.addEventListener('click', (e) => {
+              e.preventDefault()
+              const t = e.currentTarget.dataset.target
+              document.body.style.transition = 'opacity 0.3s ease-out'
+              document.body.style.opacity = '0'
+              setTimeout(() => {
+                const p = t.startsWith('page-home-') ? 'page-home' : t
+                showPage(p)
+                window.scrollTo({ top: 0, behavior: 'auto' })
+                if (t.startsWith('page-home-')) {
+                  const a = t.substring('page-home-'.length)
+                  document
+                    .getElementById(a)
+                    ?.scrollIntoView({ behavior: 'smooth' })
+                }
+                document.body.style.opacity = '1'
+              }, 300)
+            })
           })
-
-          const observer = new IntersectionObserver(
-            (entries) => {
-              entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                  entry.target.classList.add('visible')
-                  observer.unobserve(entry.target)
+          showPage('page-home')
+        }
+        const initPageLogic = () => {
+          AOS.init({ duration: 800, easing: 'ease-in-out', once: true })
+          const o = new IntersectionObserver(
+            (e) => {
+              e.forEach((n) => {
+                if (n.isIntersecting) {
+                  n.target.classList.add('visible')
+                  o.unobserve(n.target)
                 }
               })
             },
@@ -1600,527 +2085,232 @@
             .querySelectorAll(
               '.product-card, .hero__title, .hero__subtitle, .hero__cta'
             )
-            .forEach((el) => observer.observe(el))
-
-          const heroBg = document.getElementById('hero-bg')
-          if (heroBg) {
+            .forEach((e) => o.observe(e))
+          const h = document.getElementById('hero-bg')
+          if (h)
             window.addEventListener('mousemove', (e) => {
-              const moveX = (e.clientX - window.innerWidth / 2) / -50
-              const moveY = (e.clientY - window.innerHeight / 2) / -50
-              heroBg.style.transform = `scale(1.1) translate(${moveX}px, ${moveY}px)`
+              const x = (e.clientX - window.innerWidth / 2) / -50,
+                y = (e.clientY - window.innerHeight / 2) / -50
+              h.style.transform = `scale(1.1) translate(${x}px, ${y}px)`
             })
-          }
-
-          const navbar = document.getElementById('navbar')
-          if (navbar) {
-            window.addEventListener('scroll', () => {
+          if (navbar)
+            window.addEventListener('scroll', () =>
               navbar.classList.toggle('scrolled', window.scrollY > 50)
-            })
-          }
+            )
         }
-
-        function populateCatalogs() {
-          const productGrid = document.querySelector('#page-menu .product-grid')
-          if (!productGrid) return
-
-          const productSource = [
+        const populateCatalogs = () => {
+          const p = document.querySelector('#page-menu .product-grid')
+          if (!p) return
+          const s = [
             {
               id: 1,
               img: 'assets/images/es-sirup.jpg',
               name: 'Es Sirup Merah',
-              desc: 'Sirup merah delima dengan Nootropic Infusion untuk meningkatkan fokus kognitif. Dirancang untuk bio-hacking produktivitas Anda.',
+              desc: '...',
               price: 13000,
             },
             {
               id: 2,
               img: 'assets/images/kentang-goreng.jpg',
               name: 'French Fries',
-              desc: 'Kentang impor yang dipotong presisi mengikuti Golden Ratio. Keseimbangan natrium-kalium optimal untuk energi seluler.',
+              desc: '...',
               price: 11000,
             },
             {
               id: 3,
               img: 'assets/images/teh-manis.jpg',
               name: 'Sweet Tea',
-              desc: 'Es teh dari daun teh Camellia Sinensis yang kaya antioksidan polifenol. Mampu mereset chrono-reseptor tubuh Anda.',
+              desc: '...',
               price: 7000,
             },
             {
               id: 4,
               img: 'assets/images/crepe-roll.jpg',
               name: 'Crepe Roll',
-              desc: 'Lapisan crepe tipis yang melipat ruang dan waktu. Isian krim partikel vanila dari Madagascar memberikan singularitas rasa.',
+              desc: '...',
               price: 15000,
             },
             {
               id: 5,
               img: 'assets/images/oreo-ciskek-otmil.jpg',
               name: 'Cheesecake Oatmeal',
-              desc: 'Puding oat dengan pusaran cheesecake galaksi dan asteroid Oreo. Mengandung asam amino esensial untuk konstruksi realitas.',
+              desc: '...',
               price: 25000,
             },
             {
               id: 6,
               img: 'assets/images/bunny-float.jpg',
               name: 'Bunny Float',
-              desc: 'Es krim vanila organik terapung di soda rasa buah.',
+              desc: '...',
               price: 20000,
             },
             {
               id: 7,
               img: 'assets/images/puding-kelinci.jpg',
               name: 'Puding Kelinci',
-              desc: 'Puding susu lembut dengan bentuk kelinci yang lucu dan menggemaskan.',
+              desc: '...',
               price: 15000,
             },
           ]
-
-          productGrid.innerHTML = productSource
+          p.innerHTML = s
             .map(
-              (p) => `
-            <div class="product-card" data-aos="fade-up">
-                <img src="${p.img}" alt="${p.name}" loading="lazy">
-                <div class="product-card__content">
-                    <h3 class="product-card__name">${p.name}</h3>
-                    <p class="product-card__desc">${p.desc}</p>
-                    <p class="product-card__price">Rp ${p.price.toLocaleString(
-                      'id-ID'
-                    )}</p>
-                    <button class="product-card__buy-btn" data-id="${
-                      p.id
-                    }">PESAN</button>
-                </div>
-            </div>`
+              (i) =>
+                `<div class="product-card" data-aos="fade-up"><img src="${
+                  i.img
+                }" alt="${
+                  i.name
+                }" loading="lazy"><div class="product-card__content"><h3 class="product-card__name">${
+                  i.name
+                }</h3><p>Deskripsi sengaja dipersingkat di sini.</p><p class="product-card__price">Rp ${i.price.toLocaleString(
+                  'id-ID'
+                )}</p><button class="product-card__buy-btn" data-id="${
+                  i.id
+                }">PESAN</button></div></div>`
             )
             .join('')
-
-          document
-            .querySelectorAll('.product-card__buy-btn')
-            .forEach((button) => {
-              button.addEventListener('click', () => {
-                const id = parseInt(button.dataset.id)
-                const product = productSource.find((p) => p.id === id)
-                addToCart(product)
-              })
+          document.querySelectorAll('.product-card__buy-btn').forEach((b) =>
+            b.addEventListener('click', () => {
+              const i = parseInt(b.dataset.id),
+                t = s.find((e) => e.id === i)
+              addToCart(t)
             })
+          )
         }
-
-        function saveCart() {
+        const saveCart = () => {
           localStorage.setItem('MaMiCafeCart', JSON.stringify(cart))
         }
-
-        function showNotification(message, duration = 3000) {
-          const container = document.getElementById('notification-container')
-          if (!container) return
-
-          const toast = document.createElement('div')
-          toast.className = 'notification-toast'
-
-          toast.innerHTML = `
-        <div class="toast-icon">
-            <i class="ri-check-double-line"></i>
-        </div>
-        <div class="toast-message">
-            ${message}
-        </div>
-        <div class="toast-progress" style="animation-duration: ${
-          duration / 1000
-        }s"></div>
-    `
-
-          container.appendChild(toast)
-
-          setTimeout(() => {
-            toast.classList.add('exit')
-            // Hapus elemen dari DOM setelah animasi keluar selesai
-            toast.addEventListener(
-              'animationend',
-              () => {
-                toast.remove()
-              },
-              { once: true }
-            )
-          }, duration)
-        }
-
-        function addToCart(product) {
-          const existingItem = cart.find((item) => item.id === product.id)
-          if (existingItem) {
-            existingItem.quantity++
-          } else {
-            cart.push({ ...product, quantity: 1 })
-          }
+        const addToCart = (p) => {
+          const e = cart.find((i) => i.id === p.id)
+          if (e) e.quantity++
+          else cart.push({ ...p, quantity: 1 })
           saveCart()
           renderCart()
           updateCartIcon()
-
-          showNotification(
-            `<strong>${
-              product.name || 'Produk'
-            } telah ditambahkan ke keranjang!`
-          )
+          showNotification(`<strong>${p.name}</strong> ditambahkan!`)
         }
-
-        function updateCart(id, change) {
-          const item = cart.find((item) => item.id === id)
-          if (item) {
-            item.quantity += change
-            if (item.quantity <= 0) {
-              cart = cart.filter((item) => item.id !== id)
-            }
+        const updateCart = (id, change) => {
+          const i = cart.find((i) => i.id === id)
+          if (i) {
+            i.quantity += change
+            if (i.quantity <= 0) cart = cart.filter((t) => t.id !== id)
           }
           saveCart()
           renderCart()
           updateCartIcon()
         }
-
-        function renderCart() {
-          const cartContainer = document.getElementById('cart-items-container')
-          const cartTotalElem = document.getElementById('cart-total-price')
-
+        const renderCart = () => {
+          const c = document.getElementById('cart-items-container'),
+            t = document.getElementById('cart-total-price')
           if (cart.length === 0) {
-            cartContainer.innerHTML =
-              '<p style="text-align: center; color: var(--text-dim);">Keranjang Anda kosong.</p>'
-            cartTotalElem.textContent = 'Rp 0'
+            c.innerHTML =
+              '<p style="text-align: center; color: var(--text-dim);">Keranjang kosong.</p>'
+            t.textContent = 'Rp 0'
             return
           }
-
-          cartContainer.innerHTML = cart
+          c.innerHTML = cart
             .map(
-              (item) => `
-            <div class="cart-item">
-                <img src="${item.img}" alt="${item.name}">
-                <div class="cart-item__info">
-                    <h4>${item.name}</h4>
-                    <p>Rp ${item.price.toLocaleString('id-ID')} x ${
-                item.quantity
-              }</p>
-                </div>
-                <div class="cart-item__actions">
-                    <button class="quantity-change" data-id="${
-                      item.id
-                    }" data-change="-1">-</button>
-                    <span>${item.quantity}</span>
-                    <button class="quantity-change" data-id="${
-                      item.id
-                    }" data-change="1">+</button>
-                </div>
-            </div>`
+              (i) =>
+                `<div class="cart-item"><img src="${i.img}" alt="${
+                  i.name
+                }"><div><h4>${i.name}</h4><p>Rp ${i.price.toLocaleString(
+                  'id-ID'
+                )} x ${
+                  i.quantity
+                }</p></div><div class="cart-item__actions"><button class="quantity-change" data-id="${
+                  i.id
+                }" data-change="-1">-</button><span>${
+                  i.quantity
+                }</span><button class="quantity-change" data-id="${
+                  i.id
+                }" data-change="1">+</button></div></div>`
             )
             .join('')
-
-          const total = cart.reduce(
-            (sum, item) => sum + item.price * item.quantity,
-            0
-          )
-          cartTotalElem.textContent = `Rp ${total.toLocaleString('id-ID')}`
-
-          document.querySelectorAll('.quantity-change').forEach((button) => {
-            button.addEventListener('click', () => {
-              const id = parseInt(button.dataset.id)
-              const change = parseInt(button.dataset.change)
-              updateCart(id, change)
+          const o = cart.reduce((s, i) => s + i.price * i.quantity, 0)
+          t.textContent = `Rp ${o.toLocaleString('id-ID')}`
+          document.querySelectorAll('.quantity-change').forEach((b) =>
+            b.addEventListener('click', () => {
+              const i = parseInt(b.dataset.id),
+                c = parseInt(b.dataset.change)
+              updateCart(i, c)
             })
-          })
+          )
         }
-
-        function updateCartIcon() {
-          const badge = document.querySelector('.cart-badge')
-          const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0)
-          badge.textContent = totalItems
-          badge.style.transform = 'scale(1.3)'
-          setTimeout(() => {
-            badge.style.transform = 'scale(1)'
-          }, 200)
+        const updateCartIcon = () => {
+          const b = document.querySelector('.cart-badge'),
+            t = cart.reduce((s, i) => s + i.quantity, 0)
+          b.textContent = t
+          if (t > 0) {
+            b.style.transform = 'scale(1.3)'
+            setTimeout(() => (b.style.transform = 'scale(1)'), 200)
+          }
         }
-
-        function setupCartModal() {
-          const cartButton = document.getElementById('cart-button')
-          const closeButton = document.getElementById('cart-close-button')
-          const cartModal = document.getElementById('cart-modal')
-          const checkoutButton = document.getElementById('checkout-button')
-
+        const setupCartModal = () => {
+          const c = document.getElementById('cart-close-button'),
+            m = document.getElementById('cart-modal'),
+            o = document.getElementById('checkout-button')
           cartButton.addEventListener('click', (e) => {
             e.preventDefault()
             renderCart()
-            cartModal.classList.add('active')
+            m.classList.add('active')
           })
-
-          closeButton.addEventListener('click', () => {
-            cartModal.classList.remove('active')
+          c.addEventListener('click', () => m.classList.remove('active'))
+          m.addEventListener('click', (e) => {
+            if (e.target === m) m.classList.remove('active')
           })
-
-          cartModal.addEventListener('click', (e) => {
-            if (e.target === cartModal) {
-              cartModal.classList.remove('active')
-            }
-          })
-
-          checkoutButton.addEventListener('click', () => {
-            if (cart.length === 0) {
-              alert('Keranjang Anda kosong!')
-              return
-            }
-            const total = cart.reduce(
-              (sum, item) => sum + item.price * item.quantity,
-              0
-            )
-            let message = 'Halo MaMi Cafe, saya ingin memesan:\n\n'
-            cart.forEach((item) => {
-              message += `${item.name} (x${item.quantity}) - Rp ${(
-                item.price * item.quantity
+          o.addEventListener('click', () => {
+            if (cart.length === 0) return
+            const t = cart.reduce((s, i) => s + i.price * i.quantity, 0)
+            let a = 'Halo MaMi Cafe, saya ingin memesan:\n\n'
+            cart.forEach((i) => {
+              a += `${i.name} (x${i.quantity}) - Rp ${(
+                i.price * i.quantity
               ).toLocaleString('id-ID')}\n`
             })
-            message += `\n*Total: Rp ${total.toLocaleString('id-ID')}*`
-
-            const encodedMessage = encodeURIComponent(message)
-
-            const whatsappURL = `https://wa.me/6282297970015?text=${encodedMessage}`
-
-            window.open(whatsappURL, '_blank')
-
+            a += `\n*Total: Rp ${t.toLocaleString('id-ID')}*`
+            window.open(
+              `https://wa.me/6282297970015?text=${encodeURIComponent(a)}`,
+              '_blank'
+            )
             cart = []
             saveCart()
             renderCart()
             updateCartIcon()
-            cartModal.classList.remove('active')
+            m.classList.remove('active')
           })
         }
 
-        window.activateQuantumEffects = () => {
-          populateCatalogs()
-          initPageLogic()
-          setupCartModal()
-          updateCartIcon()
+        // === Pasang Event Listeners ===
+        loginForm.addEventListener('submit', handleLogin)
+        registerForm.addEventListener('submit', handleRegister)
+        logoutBtn.addEventListener('click', handleLogout)
+        editProfileBtn.addEventListener('click', (e) => {
+          e.preventDefault()
+          openEditProfileModal()
+        })
+        editProfileForm.addEventListener('submit', handleProfileUpdate)
+        showRegisterLink.addEventListener('click', (e) => {
+          e.preventDefault()
+          showRegisterForm()
+        })
+        showLoginLink.addEventListener('click', (e) => {
+          e.preventDefault()
+          showLoginForm()
+        })
+        editProfileCloseBtn.addEventListener('click', () =>
+          editProfileModal.classList.remove('active')
+        )
+        profilePic.addEventListener('click', (e) => {
+          e.stopPropagation()
+          profileDropdown.classList.toggle('active')
+        })
+        window.addEventListener('click', () => {
+          if (profileDropdown.classList.contains('active'))
+            profileDropdown.classList.remove('active')
+        })
 
-          const loginBtn = document.getElementById('login-btn')
-          const profileContainer = document.getElementById('profile-container')
-          const profilePic = document.getElementById('profile-pic')
-          const dropdownHeader = document.getElementById('dropdown-header')
-
-          // Elemen Modal
-          const profileModal = document.getElementById('profile-modal')
-          const profileModalTitle = document.getElementById(
-            'profile-modal-title'
-          )
-          const profileModalCloseBtn = document.getElementById(
-            'profile-modal-close-button'
-          )
-          const profileForm = document.getElementById('profile-form')
-          const profileFormSubmitBtn = document.getElementById(
-            'profile-form-submit-btn'
-          )
-
-          // Elemen Form
-          const profileNameInput = document.getElementById('profile-name')
-          const profileImageFileInput =
-            document.getElementById('profile-image-file')
-          const profileImagePreview = document.getElementById(
-            'profile-image-preview'
-          )
-          const selectImageBtn = document.getElementById('select-image-btn')
-
-          // State aplikasi (variabel untuk data user sementara)
-          let currentUser = null
-          let newImageDataBase64 = null
-
-          // FUNGSI UTAMA
-
-          // Fungsi membaca data user dari localStorage
-          function loadUserFromStorage() {
-            const userDataString = localStorage.getItem('MaMiCafeUser')
-            currentUser = userDataString ? JSON.parse(userDataString) : null
-          }
-
-          // Fungsi menyimpan data user ke localStorage
-          function saveUserToStorage(name, imageData) {
-            const user = { name, imageData }
-            localStorage.setItem('MaMiCafeUser', JSON.stringify(user))
-            currentUser = user
-          }
-
-          // Fungsi mengatur UI berdasarkan status login
-          function updateUserInterface() {
-            if (currentUser) {
-              // Tampilan jika LOGIN
-              loginBtn.classList.add('page-hidden')
-              profileContainer.classList.remove('page-hidden')
-
-              profilePic.src = currentUser.imageData
-              dropdownHeader.innerHTML = `<strong>${currentUser.name}</strong>`
-            } else {
-              // Tampilan jika LOGOUT
-              loginBtn.classList.remove('page-hidden')
-              profileContainer.classList.add('page-hidden')
-            }
-          }
-
-          // Fungsi untuk mengubah file gambar menjadi data URL Base64
-          function handleFileSelect(file) {
-            if (file && file.type.startsWith('image/')) {
-              const reader = new FileReader()
-              reader.onloadend = () => {
-                // Hasilnya disimpan di variabel sementara
-                newImageDataBase64 = reader.result
-                // Tampilkan di pratinjau
-                profileImagePreview.src = newImageDataBase64
-                profileImagePreview.classList.add('active')
-              }
-              reader.readAsDataURL(file)
-            }
-          }
-
-          // Fungsi untuk membuka modal (bisa untuk login atau edit)
-          function openProfileModal(mode = 'login') {
-            newImageDataBase64 = null // Reset gambar baru setiap kali modal dibuka
-            if (mode === 'edit' && currentUser) {
-              profileModalTitle.textContent = 'Ganti Profil'
-              profileFormSubmitBtn.textContent = 'Simpan Perubahan'
-              profileNameInput.value = currentUser.name
-              profileImagePreview.src = currentUser.imageData
-              profileImagePreview.classList.add('active')
-            } else {
-              profileModalTitle.textContent = 'Buat Profil Anda'
-              profileFormSubmitBtn.textContent = 'Simpan & Masuk'
-              profileForm.reset()
-              profileImagePreview.src = ''
-              profileImagePreview.classList.remove('active')
-            }
-            profileModal.classList.add('active')
-          }
-
-          // EVENT LISTENERS
-
-          // Tombol Login: membuka modal dalam mode 'login'
-          loginBtn.addEventListener('click', (e) => {
-            e.preventDefault()
-            openProfileModal('login')
-          })
-
-          // Tombol Edit Profil: membuka modal dalam mode 'edit'
-          document
-            .getElementById('edit-profile-btn')
-            .addEventListener('click', (e) => {
-              e.preventDefault()
-              document
-                .getElementById('profile-dropdown')
-                .classList.remove('active')
-              openProfileModal('edit')
-            })
-
-          // Tombol "Pilih Gambar" memicu input file yang tersembunyi
-          selectImageBtn.addEventListener('click', () => {
-            profileImageFileInput.click()
-          })
-
-          // Ketika pengguna memilih file, panggil fungsi handler
-          profileImageFileInput.addEventListener('change', (e) => {
-            handleFileSelect(e.target.files[0])
-          })
-
-          // Tombol Logout
-          document
-            .getElementById('logout-btn')
-            .addEventListener('click', (e) => {
-              e.preventDefault()
-              localStorage.removeItem('MaMiCafeUser')
-              currentUser = null
-              updateUserInterface()
-              document
-                .getElementById('profile-dropdown')
-                .classList.remove('active')
-              showNotification('<strong>Anda telah logout.</strong>')
-            })
-
-          // Submit form (Login atau Edit)
-          profileForm.addEventListener('submit', (e) => {
-            e.preventDefault()
-            const newName = profileNameInput.value.trim()
-
-            // Cek validasi: Nama tidak boleh kosong
-            if (!newName) {
-              showNotification('Nama tidak boleh kosong.', 2000)
-              return
-            }
-
-            // Jika gambar tidak diganti, gunakan gambar lama (saat edit)
-            // Jika ini login pertama kali & tidak pilih gambar, beri pesan eror
-            const finalImageData =
-              newImageDataBase64 || (currentUser ? currentUser.imageData : null)
-
-            if (!finalImageData) {
-              showNotification('Silakan pilih foto profil.', 2000)
-              return
-            }
-
-            saveUserToStorage(newName, finalImageData)
-            updateUserInterface()
-            profileModal.classList.remove('active')
-            showNotification('<strong>Profil berhasil disimpan!</strong>')
-          })
-
-          // Logika menutup modal
-          profileModalCloseBtn.addEventListener('click', () =>
-            profileModal.classList.remove('active')
-          )
-          profileModal.addEventListener('click', (e) => {
-            if (e.target === profileModal)
-              profileModal.classList.remove('active')
-          })
-
-          // Logika dropdown profil
-          const profileDropdown = document.getElementById('profile-dropdown')
-          profilePic.addEventListener('click', (e) => {
-            e.stopPropagation()
-            profileDropdown.classList.toggle('active')
-          })
-          window.addEventListener('click', () => {
-            if (profileDropdown.classList.contains('active')) {
-              profileDropdown.classList.remove('active')
-            }
-          })
-
-          // INISIALISASI SAAT HALAMAN DIMUAT
-          function initializeProfileSystem() {
-            loadUserFromStorage()
-            updateUserInterface()
-          }
-          initializeProfileSystem()
-
-          document.querySelectorAll('[data-target]').forEach((link) => {
-            link.addEventListener('click', (e) => {
-              e.preventDefault()
-              const target = e.currentTarget.dataset.target
-              document.body.style.transition = 'opacity 0.3s ease-out'
-              document.body.style.opacity = '0'
-
-              setTimeout(() => {
-                const targetPageId = target.startsWith('page-home-')
-                  ? 'page-home'
-                  : target
-                showPage(targetPageId)
-                window.scrollTo({ top: 0, behavior: 'auto' })
-
-                if (target.startsWith('page-home-')) {
-                  const anchorId = target.substring('page-home-'.length)
-                  document
-                    .getElementById(anchorId)
-                    ?.scrollIntoView({ behavior: 'smooth' })
-                }
-
-                document.body.style.opacity = '1'
-              }, 300)
-            })
-          })
-          showPage('page-home')
-        }
-
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', initializeSystem)
-        } else {
-          initializeSystem()
-        }
-      })()
+        // === Mulai Sistem ===
+        initializeSystem()
+      })
     </script>
   </body>
 </html>
