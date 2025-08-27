@@ -990,6 +990,179 @@
           gap: 2rem;
         }
       }
+
+      .profile-container {
+        position: relative;
+      }
+
+      /* Gambar Profil */
+      .profile-pic {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid var(--border-color);
+        cursor: pointer;
+        transition: var(--transition-quantum);
+      }
+
+      .profile-pic:hover {
+        border-color: var(--accent-primary);
+        box-shadow: var(--neon-glow);
+        transform: scale(1.1);
+      }
+
+      /* Dropdown Menu */
+      .profile-dropdown {
+        position: absolute;
+        top: 130%;
+        right: 0;
+        width: 220px;
+        background: var(--bg-light);
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(10px);
+        padding: 0.75rem 0;
+        z-index: 1001;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(20px);
+        transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+      }
+
+      .profile-dropdown.active {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+
+      /* Header di Dropdown (untuk nama) */
+      .dropdown-header {
+        padding: 0.75rem 1.5rem;
+        border-bottom: 1px solid var(--border-color);
+        margin-bottom: 0.5rem;
+        color: var(--text-dim);
+        font-size: 0.9rem;
+      }
+
+      .dropdown-header strong {
+        color: var(--text-light);
+        font-size: 1rem;
+        display: block;
+      }
+
+      /* Link di dalam Dropdown */
+      .profile-dropdown a {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        padding: 0.8rem 1.5rem;
+        color: var(--text-dim);
+        text-decoration: none;
+        font-size: 1rem;
+        transition: 0.2s ease;
+      }
+
+      .profile-dropdown a:hover {
+        background-color: rgba(255, 184, 108, 0.1);
+        color: var(--accent-primary);
+      }
+
+      .profile-dropdown a i {
+        font-size: 1.2rem;
+      }
+
+      /* Form di dalam Modal Edit Profil */
+      .profile-form .form-group {
+        margin-bottom: 1.5rem;
+        text-align: left;
+      }
+
+      .profile-form label {
+        display: block;
+        margin-bottom: 0.75rem;
+        color: var(--text-dim);
+        font-family: var(--font-display);
+      }
+
+      .profile-form input {
+        width: 100%;
+        padding: 0.8rem 1.2rem;
+        background: var(--bg-dark);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        color: var(--text-light);
+        font-size: 1rem;
+        transition: 0.2s ease;
+      }
+
+      .profile-form input:focus {
+        outline: none;
+        border-color: var(--accent-primary);
+        box-shadow: 0 0 15px var(--accent-glow);
+      }
+      .navbar__login-btn {
+        color: var(--text-dim);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1rem;
+        padding: 0.5rem 1.2rem;
+        border: 1px solid var(--border-color);
+        border-radius: 50px;
+        transition: var(--transition-quantum);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .navbar__login-btn:hover {
+        background: var(--accent-primary);
+        border-color: var(--accent-primary);
+        color: var(--bg-dark);
+        box-shadow: var(--neon-glow);
+      }
+
+      /* Penyesuaian agar profile & cart sejajar */
+      .navbar__extra {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+      }
+
+      /* Pratinjau Gambar di Modal */
+      .image-preview {
+        display: none; /* Awalnya disembunyikan */
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin: 0.5rem auto 1.5rem;
+        border: 3px solid var(--border-color);
+      }
+
+      .image-preview.active {
+        display: block; /* Tampilkan jika ada gambar */
+      }
+
+      /* Tombol custom untuk memilih file */
+      .select-image-btn {
+        width: 100%;
+        padding: 0.8rem;
+        font-size: 1rem;
+        font-family: var(--font-body);
+        background: var(--bg-dark);
+        color: var(--text-dim);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.2s ease;
+      }
+
+      .select-image-btn:hover {
+        border-color: var(--accent-tertiary);
+        color: var(--accent-tertiary);
+      }
     </style>
   </head>
   <body>
@@ -1020,7 +1193,29 @@
         <a href="#" data-target="page-menu">Menu</a>
         <a href="#" data-target="page-home-kontak">Kontak</a>
       </nav>
+
       <div class="navbar__extra">
+        <!-- Tombol ini muncul saat pengguna BELUM login -->
+        <a href="#" id="login-btn" class="navbar__login-btn">
+          <i class="ri-user-line"></i> Login
+        </a>
+
+        <!-- Kontainer ini muncul saat pengguna SUDAH login. Awalnya disembunyikan. -->
+        <div class="profile-container page-hidden" id="profile-container">
+          <img src="" alt="Profil" class="profile-pic" id="profile-pic" />
+          <div class="profile-dropdown" id="profile-dropdown">
+            <div class="dropdown-header" id="dropdown-header">
+              <strong>Nama Pengguna</strong>
+            </div>
+            <a href="#" id="edit-profile-btn"
+              ><i class="ri-edit-2-line"></i> Ganti Profil</a
+            >
+            <a href="#" id="logout-btn"
+              ><i class="ri-logout-box-r-line"></i> Logout</a
+            >
+          </div>
+        </div>
+
         <a href="#" id="cart-button" class="cart-icon">
           <i class="ri-shopping-cart-2-line"></i>
           <span class="cart-badge">0</span>
@@ -1278,6 +1473,62 @@
 
     <div id="notification-container" class="notification-toast-container"></div>
 
+    <<!-- GANTI MODAL PROFIL SEBELUMNYA DENGAN INI -->
+    <div class="cart-modal" id="profile-modal">
+      <div class="cart-modal__content">
+        <h2 class="cart-modal__title" id="profile-modal-title">
+          Buat Profil Anda
+        </h2>
+        <button class="cart-modal__close" id="profile-modal-close-button">
+          &times;
+        </button>
+        <form id="profile-form" class="profile-form">
+          <div class="form-group">
+            <label for="profile-name">Nama Anda</label>
+            <input
+              type="text"
+              id="profile-name"
+              required
+              placeholder="Masukkan nama..."
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="profile-image-file">Foto Profil</label>
+            <!-- Pratinjau gambar akan muncul di sini -->
+            <img
+              src=""
+              alt="Pratinjau Gambar"
+              id="profile-image-preview"
+              class="image-preview"
+            />
+            <!-- Input file untuk mengunggah gambar -->
+            <input
+              type="file"
+              id="profile-image-file"
+              accept="image/*"
+              style="display: none"
+            />
+            <button
+              type="button"
+              id="select-image-btn"
+              class="select-image-btn"
+            >
+              Pilih Gambar dari Perangkat
+            </button>
+          </div>
+
+          <button
+            type="submit"
+            id="profile-form-submit-btn"
+            class="cart-modal__checkout-btn"
+          >
+            Simpan & Masuk
+          </button>
+        </form>
+      </div>
+    </div>
+
     <footer class="footer">
       <div class="social-links">
         <a href="#" class="social-link"><i class="ri-instagram-line"></i></a>
@@ -1406,7 +1657,7 @@
               img: 'assets/images/oreo-ciskek-otmil.jpg',
               name: 'Cheesecake Oatmeal',
               desc: 'Puding oat dengan pusaran cheesecake galaksi dan asteroid Oreo. Mengandung asam amino esensial untuk konstruksi realitas.',
-              price: 25000000,
+              price: 25000,
             },
             {
               id: 6,
@@ -1641,6 +1892,200 @@
           initPageLogic()
           setupCartModal()
           updateCartIcon()
+
+          const loginBtn = document.getElementById('login-btn')
+          const profileContainer = document.getElementById('profile-container')
+          const profilePic = document.getElementById('profile-pic')
+          const dropdownHeader = document.getElementById('dropdown-header')
+
+          // Elemen Modal
+          const profileModal = document.getElementById('profile-modal')
+          const profileModalTitle = document.getElementById(
+            'profile-modal-title'
+          )
+          const profileModalCloseBtn = document.getElementById(
+            'profile-modal-close-button'
+          )
+          const profileForm = document.getElementById('profile-form')
+          const profileFormSubmitBtn = document.getElementById(
+            'profile-form-submit-btn'
+          )
+
+          // Elemen Form
+          const profileNameInput = document.getElementById('profile-name')
+          const profileImageFileInput =
+            document.getElementById('profile-image-file')
+          const profileImagePreview = document.getElementById(
+            'profile-image-preview'
+          )
+          const selectImageBtn = document.getElementById('select-image-btn')
+
+          // State aplikasi (variabel untuk data user sementara)
+          let currentUser = null
+          let newImageDataBase64 = null
+
+          // FUNGSI UTAMA
+
+          // Fungsi membaca data user dari localStorage
+          function loadUserFromStorage() {
+            const userDataString = localStorage.getItem('MaMiCafeUser')
+            currentUser = userDataString ? JSON.parse(userDataString) : null
+          }
+
+          // Fungsi menyimpan data user ke localStorage
+          function saveUserToStorage(name, imageData) {
+            const user = { name, imageData }
+            localStorage.setItem('MaMiCafeUser', JSON.stringify(user))
+            currentUser = user
+          }
+
+          // Fungsi mengatur UI berdasarkan status login
+          function updateUserInterface() {
+            if (currentUser) {
+              // Tampilan jika LOGIN
+              loginBtn.classList.add('page-hidden')
+              profileContainer.classList.remove('page-hidden')
+
+              profilePic.src = currentUser.imageData
+              dropdownHeader.innerHTML = `<strong>${currentUser.name}</strong>`
+            } else {
+              // Tampilan jika LOGOUT
+              loginBtn.classList.remove('page-hidden')
+              profileContainer.classList.add('page-hidden')
+            }
+          }
+
+          // Fungsi untuk mengubah file gambar menjadi data URL Base64
+          function handleFileSelect(file) {
+            if (file && file.type.startsWith('image/')) {
+              const reader = new FileReader()
+              reader.onloadend = () => {
+                // Hasilnya disimpan di variabel sementara
+                newImageDataBase64 = reader.result
+                // Tampilkan di pratinjau
+                profileImagePreview.src = newImageDataBase64
+                profileImagePreview.classList.add('active')
+              }
+              reader.readAsDataURL(file)
+            }
+          }
+
+          // Fungsi untuk membuka modal (bisa untuk login atau edit)
+          function openProfileModal(mode = 'login') {
+            newImageDataBase64 = null // Reset gambar baru setiap kali modal dibuka
+            if (mode === 'edit' && currentUser) {
+              profileModalTitle.textContent = 'Ganti Profil'
+              profileFormSubmitBtn.textContent = 'Simpan Perubahan'
+              profileNameInput.value = currentUser.name
+              profileImagePreview.src = currentUser.imageData
+              profileImagePreview.classList.add('active')
+            } else {
+              profileModalTitle.textContent = 'Buat Profil Anda'
+              profileFormSubmitBtn.textContent = 'Simpan & Masuk'
+              profileForm.reset()
+              profileImagePreview.src = ''
+              profileImagePreview.classList.remove('active')
+            }
+            profileModal.classList.add('active')
+          }
+
+          // EVENT LISTENERS
+
+          // Tombol Login: membuka modal dalam mode 'login'
+          loginBtn.addEventListener('click', (e) => {
+            e.preventDefault()
+            openProfileModal('login')
+          })
+
+          // Tombol Edit Profil: membuka modal dalam mode 'edit'
+          document
+            .getElementById('edit-profile-btn')
+            .addEventListener('click', (e) => {
+              e.preventDefault()
+              document
+                .getElementById('profile-dropdown')
+                .classList.remove('active')
+              openProfileModal('edit')
+            })
+
+          // Tombol "Pilih Gambar" memicu input file yang tersembunyi
+          selectImageBtn.addEventListener('click', () => {
+            profileImageFileInput.click()
+          })
+
+          // Ketika pengguna memilih file, panggil fungsi handler
+          profileImageFileInput.addEventListener('change', (e) => {
+            handleFileSelect(e.target.files[0])
+          })
+
+          // Tombol Logout
+          document
+            .getElementById('logout-btn')
+            .addEventListener('click', (e) => {
+              e.preventDefault()
+              localStorage.removeItem('MaMiCafeUser')
+              currentUser = null
+              updateUserInterface()
+              document
+                .getElementById('profile-dropdown')
+                .classList.remove('active')
+              showNotification('<strong>Anda telah logout.</strong>')
+            })
+
+          // Submit form (Login atau Edit)
+          profileForm.addEventListener('submit', (e) => {
+            e.preventDefault()
+            const newName = profileNameInput.value.trim()
+
+            // Cek validasi: Nama tidak boleh kosong
+            if (!newName) {
+              showNotification('Nama tidak boleh kosong.', 2000)
+              return
+            }
+
+            // Jika gambar tidak diganti, gunakan gambar lama (saat edit)
+            // Jika ini login pertama kali & tidak pilih gambar, beri pesan eror
+            const finalImageData =
+              newImageDataBase64 || (currentUser ? currentUser.imageData : null)
+
+            if (!finalImageData) {
+              showNotification('Silakan pilih foto profil.', 2000)
+              return
+            }
+
+            saveUserToStorage(newName, finalImageData)
+            updateUserInterface()
+            profileModal.classList.remove('active')
+            showNotification('<strong>Profil berhasil disimpan!</strong>')
+          })
+
+          // Logika menutup modal
+          profileModalCloseBtn.addEventListener('click', () =>
+            profileModal.classList.remove('active')
+          )
+          profileModal.addEventListener('click', (e) => {
+            if (e.target === profileModal)
+              profileModal.classList.remove('active')
+          })
+
+          // Logika dropdown profil
+          const profileDropdown = document.getElementById('profile-dropdown')
+          profilePic.addEventListener('click', (e) => {
+            e.stopPropagation()
+            profileDropdown.classList.toggle('active')
+          })
+          window.addEventListener('click', () => {
+            if (profileDropdown.classList.contains('active')) {
+              profileDropdown.classList.remove('active')
+            }
+          })
+
+          // INISIALISASI SAAT HALAMAN DIMUAT
+          function initializeProfileSystem() {
+            loadUserFromStorage()
+            updateUserInterface()
+          }
+          initializeProfileSystem()
 
           document.querySelectorAll('[data-target]').forEach((link) => {
             link.addEventListener('click', (e) => {
