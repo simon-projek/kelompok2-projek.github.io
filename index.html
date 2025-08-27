@@ -32,6 +32,7 @@
         --gradient-primary: linear-gradient(135deg, #ffb86c 0%, #ff6b6b 100%);
         --gradient-secondary: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
       }
+
       *,
       *::before,
       *::after {
@@ -39,10 +40,12 @@
         margin: 0;
         padding: 0;
       }
+
       html {
         scroll-behavior: smooth;
         background: var(--bg-dark);
       }
+
       body {
         font-family: var(--font-body);
         background: radial-gradient(
@@ -58,89 +61,6 @@
         transition: opacity 0.3s ease-in-out;
       }
 
-      /* AUTHENTICATION STYLES */
-      #auth-container {
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        background: radial-gradient(
-          ellipse at center,
-          rgba(22, 22, 34, 0.7) 0%,
-          rgba(10, 10, 15, 0.9) 70%
-        );
-      }
-      .auth-form {
-        background: rgba(26, 26, 36, 0.8);
-        border: 1px solid var(--border-color);
-        padding: 3rem;
-        border-radius: 20px;
-        width: 90%;
-        max-width: 450px;
-        backdrop-filter: blur(10px);
-      }
-      .auth-form h2 {
-        font-family: var(--font-display);
-        color: var(--accent-primary);
-        text-align: center;
-        font-size: 2.5rem;
-        margin-bottom: 2rem;
-      }
-      .form-group {
-        margin-bottom: 1.5rem;
-      }
-      .form-group input {
-        width: 100%;
-        background: rgba(10, 10, 15, 0.7);
-        border: 1px solid var(--border-color);
-        border-radius: 8px;
-        padding: 1rem;
-        color: var(--text-light);
-        font-size: 1.1rem;
-      }
-      .form-group input:focus {
-        outline: none;
-        border-color: var(--accent-primary);
-        box-shadow: 0 0 10px var(--accent-glow);
-      }
-      .auth-btn {
-        width: 100%;
-        padding: 1rem;
-        font-size: 1.2rem;
-        font-family: var(--font-display);
-        background: var(--gradient-primary);
-        color: var(--bg-dark);
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-        transition: var(--transition-quantum);
-      }
-      .auth-btn:hover {
-        transform: translateY(-5px);
-        box-shadow: var(--neon-glow);
-      }
-      .form-switch {
-        text-align: center;
-        margin-top: 1.5rem;
-        color: var(--text-dim);
-      }
-      .form-switch a {
-        color: var(--accent-primary);
-        cursor: pointer;
-        text-decoration: none;
-      }
-      #auth-warning {
-        color: var(--accent-secondary);
-        text-align: center;
-        margin-bottom: 1.5rem;
-        display: none;
-      }
-      #secure-content {
-        display: none;
-      }
-
-      /* LOADING GATE */
       #loading-gate {
         position: fixed;
         top: 0;
@@ -155,13 +75,16 @@
         z-index: 99999;
         transition: opacity 1s ease-in-out, visibility 1s ease-in-out;
       }
+
       .gate-logo {
         width: 200px;
         height: 200px;
+        /* Perubahan dari color ke filter */
         filter: drop-shadow(var(--neon-glow));
         animation: quantum-pulse 2s infinite ease-in-out;
         transform-origin: center;
       }
+
       .loading-text {
         margin-top: 2rem;
         font-size: 1.4rem;
@@ -171,6 +94,7 @@
         text-transform: uppercase;
         animation: text-glow 2s ease-in-out infinite alternate;
       }
+
       .progress-bar {
         width: 300px;
         height: 8px;
@@ -181,6 +105,7 @@
         border: 1px solid rgba(255, 255, 255, 0.2);
         position: relative;
       }
+
       .progress-fill {
         height: 100%;
         width: 0%;
@@ -190,6 +115,7 @@
         border-radius: 4px;
         position: relative;
       }
+
       .progress-fill::after {
         content: '';
         position: absolute;
@@ -205,102 +131,13 @@
         );
         animation: shimmer 1.5s infinite;
       }
+
       #loading-gate.gate-hidden {
         opacity: 0 !important;
         visibility: hidden !important;
         pointer-events: none !important;
       }
 
-      /* MAIN CONTENT STYLES */
-      .navbar {
-        display: flex;
-        align-items: center;
-        padding: 1.5rem 5%;
-        background: rgba(10, 10, 15, 0.8);
-        backdrop-filter: blur(20px);
-        border-bottom: 1px solid var(--border-color);
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 1000;
-        transition: var(--transition-quantum);
-        box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
-      }
-      .navbar.scrolled {
-        padding: 1rem 5%;
-        background: rgba(10, 10, 15, 0.95);
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-      }
-      .navbar__brand {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        text-decoration: none;
-        color: var(--text-light);
-        font-size: 1.8rem;
-        font-family: var(--font-display);
-        font-weight: 700;
-        transition: var(--transition-quantum);
-        position: relative;
-      }
-      .navbar__brand::before {
-        content: '';
-        position: absolute;
-        bottom: -5px;
-        left: 0;
-        width: 0;
-        height: 2px;
-        background: var(--gradient-primary);
-        transition: width 0.3s ease;
-      }
-      .navbar__brand:hover::before {
-        width: 100%;
-      }
-      .navbar__brand:hover {
-        text-shadow: var(--neon-glow);
-        transform: translateY(-2px);
-      }
-      .navbar__logo {
-        width: 60px;
-        height: 60px;
-        object-fit: contain;
-        filter: drop-shadow(var(--neon-glow));
-        transition: var(--transition-quantum);
-        animation: logo-float 3s ease-in-out infinite;
-      }
-      .navbar__menu {
-        margin-left: auto;
-        display: flex;
-        gap: 2.5rem;
-      }
-      .navbar__menu a {
-        color: var(--text-dim);
-        text-decoration: none;
-        font-weight: 600;
-        font-size: 1.1rem;
-        position: relative;
-        padding: 0.5rem 0;
-        transition: var(--transition-quantum);
-        overflow: hidden;
-      }
-      .navbar__menu a::before {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: -100%;
-        width: 100%;
-        height: 2px;
-        background: var(--gradient-primary);
-        transition: left 0.3s ease;
-      }
-      .navbar__menu a:hover {
-        color: var(--accent-primary);
-        transform: translateY(-2px);
-      }
-      .navbar__menu a:hover::before {
-        left: 0;
-      }
       .navbar__extra {
         margin-left: 2rem;
       }
@@ -309,7 +146,6 @@
         font-size: 1.8rem;
         color: var(--text-dim);
         transition: var(--transition-quantum);
-        text-decoration: none;
       }
       .cart-icon:hover {
         color: var(--accent-primary);
@@ -332,249 +168,10 @@
         box-shadow: 0 0 10px var(--accent-secondary);
         transition: transform 0.2s ease;
       }
-      .hero {
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        padding: 2rem 5%;
-        position: relative;
-        overflow: hidden;
-        margin-top: 80px;
-      }
-      .hero::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: radial-gradient(
-          ellipse at center,
-          rgba(22, 22, 34, 0.7) 0%,
-          rgba(10, 10, 15, 0.9) 70%
-        );
-        z-index: 1;
-      }
-      .hero__bg {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-image: url('assets/images/bg-slogan.jpg');
-        background-size: cover;
-        background-position: center;
-        filter: blur(3px) brightness(0.6);
-        z-index: 0;
-        transform: scale(1.1);
-        transition: transform 0.3s ease;
-      }
-      .hero__content {
-        position: relative;
-        z-index: 2;
-      }
-      .hero__title,
-      .hero__subtitle,
-      .hero__cta {
-        opacity: 0;
-        transform: translateY(50px);
-        transition: opacity 1s ease-out, transform 1s ease-out;
-      }
-      .hero__title.visible,
-      .hero__subtitle.visible,
-      .hero__cta.visible {
-        opacity: 1;
-        transform: translateY(0);
-      }
-      .hero__title {
-        font-family: var(--font-display);
-        font-size: clamp(3.5rem, 15vw, 7rem);
-        font-weight: 700;
-        color: var(--text-light);
-        text-shadow: 0 0 30px rgba(255, 184, 108, 0.8);
-        background: var(--gradient-primary);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        margin-bottom: 1rem;
-      }
-      .hero__subtitle {
-        font-family: var(--font-body);
-        font-size: clamp(1.2rem, 5vw, 2rem);
-        color: var(--text-dim);
-        max-width: 800px;
-        margin: 1rem auto 0;
-        font-weight: 400;
-      }
-      .hero__cta {
-        display: inline-block;
-        margin-top: 3rem;
-        padding: 1.2rem 3rem;
-        border: 2px solid var(--accent-primary);
-        border-radius: 50px;
-        color: var(--accent-primary);
-        font-family: var(--font-display);
-        font-size: 1.3rem;
-        text-decoration: none;
-        position: relative;
-        overflow: hidden;
-        transition: var(--transition-quantum);
-        background: rgba(255, 184, 108, 0.1);
-        backdrop-filter: blur(10px);
-      }
-      .hero__cta::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: var(--gradient-primary);
-        transition: left 0.3s ease;
-        z-index: -1;
-      }
-      .hero__cta:hover {
-        color: var(--bg-dark);
-        transform: translateY(-5px);
-        box-shadow: 0 20px 40px rgba(255, 184, 108, 0.3);
-      }
-      .hero__cta:hover::before {
-        left: 0;
-      }
-      .content-section {
-        padding: 10rem 5%;
-        text-align: center;
-        position: relative;
-        overflow: hidden;
-      }
-      .content-section::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 1px;
-        background: linear-gradient(
-          90deg,
-          transparent,
-          var(--accent-primary),
-          transparent
-        );
-      }
-      .content-section__title {
-        font-family: var(--font-display);
-        font-size: clamp(3rem, 10vw, 5rem);
-        color: var(--text-light);
-        margin-bottom: 4rem;
-        position: relative;
-        display: inline-block;
-        background: var(--gradient-primary);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
-      .content-section__title::after {
-        content: '';
-        position: absolute;
-        bottom: -15px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 120px;
-        height: 4px;
-        background: var(--gradient-primary);
-        box-shadow: var(--neon-glow);
-        border-radius: 2px;
-      }
-      .content-section p {
-        max-width: 900px;
-        margin: 0 auto;
-        font-size: 1.3rem;
-        color: var(--text-dim);
-        line-height: 1.8;
-      }
-      .product-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-        gap: 3rem;
-        padding: 0 5% 10rem;
-        max-width: 1400px;
-        margin: 0 auto;
-      }
-      .product-card {
-        background: rgba(26, 26, 36, 0.8);
-        border: 1px solid var(--border-color);
-        border-radius: 20px;
-        text-align: center;
-        overflow: hidden;
-        transform: translateY(50px);
-        opacity: 0;
-        transition: var(--transition-quantum);
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-        backdrop-filter: blur(10px);
-        position: relative;
-      }
-      .product-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(
-          135deg,
-          rgba(255, 184, 108, 0.1) 0%,
-          rgba(255, 107, 107, 0.1) 100%
-        );
-        opacity: 0;
-        transition: opacity 0.3s ease;
-        z-index: 1;
-      }
-      .product-card.visible {
-        transform: translateY(0);
-        opacity: 1;
-      }
-      .product-card:hover {
-        transform: translateY(-15px) scale(1.02);
-        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 30px var(--accent-glow);
-        border-color: var(--accent-primary);
-      }
-      .product-card:hover::before {
-        opacity: 1;
-      }
-      .product-card img {
-        width: 100%;
-        height: 300px;
-        object-fit: cover;
-        transition: transform 0.6s ease;
-        position: relative;
-        z-index: 2;
-      }
-      .product-card:hover img {
-        transform: scale(1.1);
-      }
+
+      /* Product Card Additions */
       .product-card__content {
-        padding: 2.5rem 2rem;
-        position: relative;
-        z-index: 2;
         padding-bottom: 2rem;
-      }
-      .product-card__name {
-        font-family: var(--font-display);
-        font-size: 2rem;
-        color: var(--accent-primary);
-        margin-bottom: 1rem;
-        background: var(--gradient-primary);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
-      .product-card p {
-        color: var(--text-dim);
-        font-size: 1.2rem;
-        line-height: 1.6;
       }
       .product-card__price {
         color: var(--text-dim);
@@ -602,6 +199,8 @@
         background: var(--accent-secondary);
         box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
       }
+
+      /* Shopping Cart Modal */
       .cart-modal {
         position: fixed;
         top: 0;
@@ -672,6 +271,9 @@
         border-bottom: 1px solid var(--border-color);
         padding: 1.2rem 0;
       }
+      .cart-item:last-child {
+        border-bottom: none;
+      }
       .cart-item img {
         width: 70px;
         height: 70px;
@@ -732,6 +334,8 @@
         transform: translateY(-5px);
         box-shadow: var(--neon-glow);
       }
+
+      /* Testimonials */
       .testimonial-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -770,13 +374,14 @@
         display: flex;
         flex-direction: column;
         gap: 1rem;
-        pointer-events: none;
+        pointer-events: none; /* Penting agar tidak menghalangi elemen di bawahnya */
       }
+
       .notification-toast {
         background: rgba(30, 30, 42, 0.9);
         backdrop-filter: blur(15px);
         border: 1px solid var(--border-color);
-        border-left: 5px solid var(--accent-tertiary);
+        border-left: 5px solid var(--accent-tertiary); /* Aksen warna */
         color: var(--text-light);
         padding: 1.2rem 1.5rem;
         border-radius: 12px;
@@ -786,28 +391,34 @@
         gap: 1.2rem;
         min-width: 320px;
         max-width: 380px;
-        pointer-events: auto;
+        pointer-events: auto; /* Aktifkan kembali pointer untuk toast individual */
         position: relative;
         overflow: hidden;
         animation: toast-enter 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
       }
+
       .notification-toast.exit {
         animation: toast-exit 0.5s cubic-bezier(0.55, 0.055, 0.675, 0.19)
           forwards;
       }
+
       .toast-icon {
         font-size: 1.8rem;
         color: var(--accent-tertiary);
       }
+
       .toast-message {
         flex-grow: 1;
         font-size: 1.1rem;
         line-height: 1.4;
       }
+
       .toast-message strong {
         color: var(--text-light);
         font-weight: 600;
       }
+
+      /* Progress bar di bagian bawah notifikasi */
       .toast-progress {
         position: absolute;
         bottom: 0;
@@ -817,6 +428,444 @@
         background: var(--accent-tertiary);
         animation: progress-countdown 3s linear forwards;
       }
+
+      /* Animasi untuk masuk dan keluar */
+      @keyframes toast-enter {
+        from {
+          opacity: 0;
+          transform: translateX(100%);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes toast-exit {
+        from {
+          opacity: 1;
+          transform: translateX(0);
+        }
+        to {
+          opacity: 0;
+          transform: translateX(100%);
+        }
+      }
+
+      @keyframes progress-countdown {
+        from {
+          width: 100%;
+        }
+        to {
+          width: 0%;
+        }
+      }
+
+      /* Responsif untuk layar kecil */
+      @media (max-width: 480px) {
+        .notification-toast-container {
+          bottom: 1rem;
+          left: 1rem;
+          right: 1rem;
+          width: auto;
+        }
+        .notification-toast {
+          min-width: 0;
+          width: 100%;
+        }
+      }
+
+      /* Utility */
+      @media (max-width: 768px) {
+        .navbar__menu {
+          display: none; /* Already exists but good to ensure */
+        }
+        .navbar__extra {
+          margin-left: auto; /* Push cart icon to the right */
+        }
+      }
+
+      .navbar {
+        display: flex;
+        align-items: center;
+        padding: 1.5rem 5%;
+        background: rgba(10, 10, 15, 0.8);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--border-color);
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        transition: var(--transition-quantum);
+        box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+      }
+
+      .navbar.scrolled {
+        padding: 1rem 5%;
+        background: rgba(10, 10, 15, 0.95);
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+      }
+
+      .navbar__brand {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        text-decoration: none;
+        color: var(--text-light);
+        font-size: 1.8rem;
+        font-family: var(--font-display);
+        font-weight: 700;
+        transition: var(--transition-quantum);
+        position: relative;
+      }
+
+      .navbar__brand::before {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--gradient-primary);
+        transition: width 0.3s ease;
+      }
+
+      .navbar__brand:hover::before {
+        width: 100%;
+      }
+
+      .navbar__brand:hover {
+        text-shadow: var(--neon-glow);
+        transform: translateY(-2px);
+      }
+
+      .navbar__logo {
+        width: 60px;
+        height: 60px;
+        object-fit: contain; /* memastikan logo tidak terdistorsi */
+        filter: drop-shadow(var(--neon-glow));
+        transition: var(--transition-quantum);
+        animation: logo-float 3s ease-in-out infinite;
+      }
+
+      .navbar__menu {
+        margin-left: auto;
+        display: flex;
+        gap: 2.5rem;
+      }
+
+      .navbar__menu a {
+        color: var(--text-dim);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1.1rem;
+        position: relative;
+        padding: 0.5rem 0;
+        transition: var(--transition-quantum);
+        overflow: hidden;
+      }
+
+      .navbar__menu a::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: -100%;
+        width: 100%;
+        height: 2px;
+        background: var(--gradient-primary);
+        transition: left 0.3s ease;
+      }
+
+      .navbar__menu a:hover {
+        color: var(--accent-primary);
+        transform: translateY(-2px);
+      }
+
+      .navbar__menu a:hover::before {
+        left: 0;
+      }
+
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 2rem 5%;
+        position: relative;
+        overflow: hidden;
+        margin-top: 80px;
+      }
+
+      .hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+          ellipse at center,
+          rgba(22, 22, 34, 0.7) 0%,
+          rgba(10, 10, 15, 0.9) 70%
+        );
+        z-index: 1;
+      }
+
+      .hero__bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('assets/images/bg-slogan.jpg');
+        background-size: cover;
+        background-position: center;
+        filter: blur(3px) brightness(0.6);
+        z-index: 0;
+        transform: scale(1.1);
+        transition: transform 0.3s ease;
+      }
+
+      .hero__content {
+        position: relative;
+        z-index: 2;
+      }
+
+      .hero__title,
+      .hero__subtitle,
+      .hero__cta {
+        opacity: 0;
+        transform: translateY(50px);
+        transition: opacity 1s ease-out, transform 1s ease-out;
+      }
+
+      .hero__title.visible,
+      .hero__subtitle.visible,
+      .hero__cta.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .hero__title.visible {
+        transition-delay: 0.2s;
+      }
+      .hero__subtitle.visible {
+        transition-delay: 0.4s;
+      }
+      .hero__cta.visible {
+        transition-delay: 0.6s;
+      }
+
+      .hero__title {
+        font-family: var(--font-display);
+        font-size: clamp(3.5rem, 15vw, 7rem);
+        font-weight: 700;
+        color: var(--text-light);
+        text-shadow: 0 0 30px rgba(255, 184, 108, 0.8);
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 1rem;
+      }
+
+      .hero__subtitle {
+        font-family: var(--font-body);
+        font-size: clamp(1.2rem, 5vw, 2rem);
+        color: var(--text-dim);
+        max-width: 800px;
+        margin: 1rem auto 0;
+        font-weight: 400;
+      }
+
+      .hero__cta {
+        display: inline-block;
+        margin-top: 3rem;
+        padding: 1.2rem 3rem;
+        border: 2px solid var(--accent-primary);
+        border-radius: 50px;
+        color: var(--accent-primary);
+        font-family: var(--font-display);
+        font-size: 1.3rem;
+        text-decoration: none;
+        position: relative;
+        overflow: hidden;
+        transition: var(--transition-quantum);
+        background: rgba(255, 184, 108, 0.1);
+        backdrop-filter: blur(10px);
+      }
+
+      .hero__cta::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: var(--gradient-primary);
+        transition: left 0.3s ease;
+        z-index: -1;
+      }
+
+      .hero__cta:hover {
+        color: var(--bg-dark);
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(255, 184, 108, 0.3);
+      }
+
+      .hero__cta:hover::before {
+        left: 0;
+      }
+
+      .content-section {
+        padding: 10rem 5%;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .content-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--accent-primary),
+          transparent
+        );
+      }
+
+      .content-section__title {
+        font-family: var(--font-display);
+        font-size: clamp(3rem, 10vw, 5rem);
+        color: var(--text-light);
+        margin-bottom: 4rem;
+        position: relative;
+        display: inline-block;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .content-section__title::after {
+        content: '';
+        position: absolute;
+        bottom: -15px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 120px;
+        height: 4px;
+        background: var(--gradient-primary);
+        box-shadow: var(--neon-glow);
+        border-radius: 2px;
+      }
+
+      .content-section p {
+        max-width: 900px;
+        margin: 0 auto;
+        font-size: 1.3rem;
+        color: var(--text-dim);
+        line-height: 1.8;
+      }
+
+      .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 3rem;
+        padding: 0 5% 10rem;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      .product-card {
+        background: rgba(26, 26, 36, 0.8);
+        border: 1px solid var(--border-color);
+        border-radius: 20px;
+        text-align: center;
+        overflow: hidden;
+        transform: translateY(50px);
+        opacity: 0;
+        transition: var(--transition-quantum);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(10px);
+        position: relative;
+      }
+
+      .product-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 184, 108, 0.1) 0%,
+          rgba(255, 107, 107, 0.1) 100%
+        );
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        z-index: 1;
+      }
+
+      .product-card.visible {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      .product-card:hover {
+        transform: translateY(-15px) scale(1.02);
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 30px var(--accent-glow);
+        border-color: var(--accent-primary);
+      }
+
+      .product-card:hover::before {
+        opacity: 1;
+      }
+
+      .product-card img {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+        transition: transform 0.6s ease;
+        position: relative;
+        z-index: 2;
+      }
+
+      .product-card:hover img {
+        transform: scale(1.1);
+      }
+
+      .product-card__content {
+        padding: 2.5rem 2rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .product-card__name {
+        font-family: var(--font-display);
+        font-size: 2rem;
+        color: var(--accent-primary);
+        margin-bottom: 1rem;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .product-card p {
+        color: var(--text-dim);
+        font-size: 1.2rem;
+        line-height: 1.6;
+      }
+
       .footer {
         padding: 6rem 5% 4rem;
         text-align: center;
@@ -826,6 +875,7 @@
         background: rgba(10, 10, 15, 0.9);
         position: relative;
       }
+
       .footer::before {
         content: '';
         position: absolute;
@@ -840,12 +890,14 @@
           transparent
         );
       }
+
       .social-links {
         display: flex;
         justify-content: center;
         gap: 2rem;
         margin: 3rem 0;
       }
+
       .social-link {
         display: flex;
         align-items: center;
@@ -861,6 +913,7 @@
         transition: var(--transition-quantum);
         backdrop-filter: blur(10px);
       }
+
       .social-link:hover {
         background: var(--gradient-primary);
         color: var(--bg-dark);
@@ -868,15 +921,7 @@
         transform: translateY(-8px) scale(1.1);
         border-color: var(--accent-primary);
       }
-      .page-hidden {
-        display: none !important;
-      }
-      #visi.content-section {
-        padding-bottom: 5rem;
-      }
-      #visi .content-section__title {
-        margin-bottom: 3rem;
-      }
+
       @keyframes quantum-pulse {
         0%,
         100% {
@@ -888,6 +933,7 @@
           opacity: 1;
         }
       }
+
       @keyframes text-glow {
         0% {
           text-shadow: 0 0 10px var(--accent-primary);
@@ -897,6 +943,7 @@
             0 0 30px var(--accent-primary);
         }
       }
+
       @keyframes shimmer {
         0% {
           transform: translateX(-100%);
@@ -905,6 +952,7 @@
           transform: translateX(100%);
         }
       }
+
       @keyframes logo-float {
         0%,
         100% {
@@ -914,40 +962,21 @@
           transform: translateY(-5px);
         }
       }
-      @keyframes toast-enter {
-        from {
-          opacity: 0;
-          transform: translateX(100%);
-        }
-        to {
-          opacity: 1;
-          transform: translateX(0);
-        }
+
+      .page-hidden {
+        display: none !important;
       }
-      @keyframes toast-exit {
-        from {
-          opacity: 1;
-          transform: translateX(0);
-        }
-        to {
-          opacity: 0;
-          transform: translateX(100%);
-        }
+
+      #visi.content-section {
+        padding-bottom: 5rem;
       }
-      @keyframes progress-countdown {
-        from {
-          width: 100%;
-        }
-        to {
-          width: 0%;
-        }
+      #visi .content-section__title {
+        margin-bottom: 3rem;
       }
+
       @media (max-width: 768px) {
         .navbar__menu {
           display: none;
-        }
-        .navbar__extra {
-          margin-left: auto;
         }
         .hero__title {
           font-size: clamp(2.5rem, 15vw, 4rem);
@@ -961,383 +990,294 @@
           gap: 2rem;
         }
       }
-      @media (max-width: 480px) {
-        .notification-toast-container {
-          bottom: 1rem;
-          left: 1rem;
-          right: 1rem;
-          width: auto;
-        }
-        .notification-toast {
-          min-width: 0;
-          width: 100%;
-        }
-      }
     </style>
   </head>
   <body>
-    <div id="auth-container">
-      <div id="login-form" class="auth-form">
-        <h2>Login</h2>
-        <p id="auth-warning">Username atau Password salah.</p>
-        <form>
-          <div class="form-group">
-            <input
-              type="text"
-              id="login-username"
-              placeholder="Username"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <input
-              type="password"
-              id="login-password"
-              placeholder="Password"
-              required
-            />
-          </div>
-          <button type="submit" class="auth-btn">Login</button>
-        </form>
-        <p class="form-switch">
-          Belum punya akun? <a id="show-signup">Daftar di sini</a>
-        </p>
-      </div>
-      <div id="signup-form" class="auth-form" style="display: none">
-        <h2>Sign Up</h2>
-        <form>
-          <div class="form-group">
-            <input
-              type="text"
-              id="signup-username"
-              placeholder="Username"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <input
-              type="password"
-              id="signup-password"
-              placeholder="Password"
-              required
-            />
-          </div>
-          <button type="submit" class="auth-btn">Sign Up</button>
-        </form>
-        <p class="form-switch">
-          Sudah punya akun? <a id="show-login">Login di sini</a>
-        </p>
+    <div id="loading-gate">
+      <img
+        src="assets/images/logo-mami2.png"
+        class="gate-logo"
+        alt="MaMi Cafe Logo"
+      />
+      <div class="loading-text">LOADING...</div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
       </div>
     </div>
 
-    <div id="secure-content">
-      <div id="loading-gate">
+    <header class="navbar" id="navbar">
+      <a href="#" data-target="page-home" class="navbar__brand">
         <img
           src="assets/images/logo-mami2.png"
-          class="gate-logo"
+          class="navbar__logo"
           alt="MaMi Cafe Logo"
         />
-        <div class="loading-text">MENGKALIBRASI REALITAS...</div>
-        <div class="progress-bar">
-          <div class="progress-fill" id="progress-fill"></div>
-        </div>
-      </div>
-
-      <header class="navbar" id="navbar">
-        <a href="#" data-target="page-home" class="navbar__brand">
-          <img
-            src="assets/images/logo-mami2.png"
-            class="navbar__logo"
-            alt="MaMi Cafe Logo"
-          />
-          <span>MaMi Cafe</span>
+        <span>MaMi Cafe</span>
+      </a>
+      <nav class="navbar__menu">
+        <a href="#" data-target="page-home-tentang">Tentang</a>
+        <a href="#" data-target="page-home-visi">Visi & Misi</a>
+        <a href="#" data-target="page-menu">Menu</a>
+        <a href="#" data-target="page-home-kontak">Kontak</a>
+      </nav>
+      <div class="navbar__extra">
+        <a href="#" id="cart-button" class="cart-icon">
+          <i class="ri-shopping-cart-2-line"></i>
+          <span class="cart-badge">0</span>
         </a>
-        <nav class="navbar__menu">
-          <a href="#" data-target="page-home-tentang">Tentang</a>
-          <a href="#" data-target="page-home-visi">Visi & Misi</a>
-          <a href="#" data-target="page-menu">Menu</a>
-          <a href="#" data-target="page-home-kontak">Kontak</a>
-        </nav>
-        <div class="navbar__extra">
-          <a href="#" id="cart-button" class="cart-icon">
-            <i class="ri-shopping-cart-2-line"></i>
-            <span class="cart-badge">0</span>
-          </a>
-        </div>
-      </header>
+      </div>
+    </header>
 
-      <main id="page-home">
-        <section class="hero">
-          <div class="hero__bg" id="hero-bg"></div>
-          <div class="hero__content">
-            <h1 class="hero__title visible" id="hero-title">
-              Selamat Datang di MaMi Cafe
-            </h1>
-            <p class="hero__subtitle visible" id="hero-subtitle">
-              Simple Vibes, Rich Taste.
-            </p>
-            <a
-              href="#"
-              data-target="page-menu"
-              class="hero__cta visible"
-              id="hero-cta"
-              >Jelajahi Menu</a
-            >
-          </div>
-        </section>
-        <section id="tentang" class="content-section" data-aos="fade-in">
-          <h2 class="content-section__title">Tentang Kami</h2>
-          <p>
-            MaMi Cafe adalah tempat nongkrong cozy dan santai, dengan berbagai
-            pilihan menu dari kopi lokal sampai camilan kekinian yang cocok
-            untuk semua suasana.
+    <main id="page-home">
+      <section class="hero">
+        <div class="hero__bg" id="hero-bg"></div>
+        <div class="hero__content">
+          <h1 class="hero__title" id="hero-title">
+            Selamat Datang di MaMi Cafe
+          </h1>
+          <p class="hero__subtitle" id="hero-subtitle">
+            Simple Vibes, Rich Taste.
           </p>
-        </section>
-        <section id="visi" class="content-section">
-          <h2 class="content-section__title">Visi & Misi</h2>
-          <div
-            class="vm-container"
-            style="
-              max-width: 900px;
-              margin: 0 auto;
-              display: flex;
-              gap: 4rem;
-              align-items: flex-start;
-            "
+          <a href="#" data-target="page-menu" class="hero__cta" id="hero-cta"
+            >Jelajahi Menu</a
           >
-            <div
-              class="vm-column"
-              style="flex: 1; text-align: left"
-              data-aos="fade-right"
-            >
-              <h3
-                style="
-                  color: var(--accent-primary);
-                  font-family: var(--font-display);
-                  font-size: 1.8rem;
-                  margin-bottom: 1.5rem;
-                  border-bottom: 1px solid var(--border-color);
-                  padding-bottom: 0.75rem;
-                "
-              >
-                Visi
-              </h3>
-              <ul
-                style="
-                  list-style: none;
-                  padding-left: 0;
-                  color: var(--text-dim);
-                "
-              >
-                <li
-                  style="
-                    margin-bottom: 1.2rem;
-                    padding-left: 2rem;
-                    position: relative;
-                  "
-                >
-                  <i
-                    class="ri-radio-button-line"
-                    style="
-                      position: absolute;
-                      left: 0;
-                      top: 5px;
-                      color: var(--accent-primary);
-                      font-size: 1rem;
-                    "
-                  ></i
-                  >Menjadi bisnis yang sukses dan dikenal banyak orang
-                </li>
-                <li
-                  style="
-                    margin-bottom: 1.2rem;
-                    padding-left: 2rem;
-                    position: relative;
-                  "
-                >
-                  <i
-                    class="ri-radio-button-line"
-                    style="
-                      position: absolute;
-                      left: 0;
-                      top: 5px;
-                      color: var(--accent-primary);
-                      font-size: 1rem;
-                    "
-                  ></i
-                  >Membangun brand yang dikenal karena
-                  <strong>inovasi, kualitas, dan kepuasan pelanggan.</strong>
-                </li>
-                <li style="padding-left: 2rem; position: relative">
-                  <i
-                    class="ri-radio-button-line"
-                    style="
-                      position: absolute;
-                      left: 0;
-                      top: 5px;
-                      color: var(--accent-primary);
-                      font-size: 1rem;
-                    "
-                  ></i
-                  >Menjadi bisnis yang menyediakan snack yang lezat dan
-                  berkualitas dengan harga yang terjangkau dan dicintai semua
-                  kalangan.
-                </li>
-              </ul>
-            </div>
-            <div
-              class="vm-column"
-              style="flex: 1; text-align: left"
-              data-aos="fade-left"
-            >
-              <h3
-                style="
-                  color: var(--accent-primary);
-                  font-family: var(--font-display);
-                  font-size: 1.8rem;
-                  margin-bottom: 1.5rem;
-                  border-bottom: 1px solid var(--border-color);
-                  padding-bottom: 0.75rem;
-                "
-              >
-                Misi
-              </h3>
-              <ul
-                style="
-                  list-style: none;
-                  padding-left: 0;
-                  color: var(--text-dim);
-                "
-              >
-                <li
-                  style="
-                    margin-bottom: 1.2rem;
-                    padding-left: 2rem;
-                    position: relative;
-                  "
-                >
-                  <i
-                    class="ri-radio-button-line"
-                    style="
-                      position: absolute;
-                      left: 0;
-                      top: 5px;
-                      color: var(--accent-primary);
-                      font-size: 1rem;
-                    "
-                  ></i
-                  >Menghasilkan produk yang berkualitas dengan harga yang
-                  terjangkau.
-                </li>
-                <li
-                  style="
-                    margin-bottom: 1.2rem;
-                    padding-left: 2rem;
-                    position: relative;
-                  "
-                >
-                  <i
-                    class="ri-radio-button-line"
-                    style="
-                      position: absolute;
-                      left: 0;
-                      top: 5px;
-                      color: var(--accent-primary);
-                      font-size: 1rem;
-                    "
-                  ></i
-                  >Menyediakan layanan pelanggan yang
-                  <strong>cepat, ramah, dan responsif.</strong>
-                </li>
-                <li style="padding-left: 2rem; position: relative">
-                  <i
-                    class="ri-radio-button-line"
-                    style="
-                      position: absolute;
-                      left: 0;
-                      top: 5px;
-                      color: var(--accent-primary);
-                      font-size: 1rem;
-                    "
-                  ></i
-                  >Memenuhi permintaan konsumen dan terus berkembang menjadi
-                  lebih baik
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-        <section id="kontak" class="content-section">
-          <h2 class="content-section__title">Hubungi Kami</h2>
-          <p>Email: quantum@mamicafe.com | Instagram: @mamicafe.quantum</p>
-        </section>
-      </main>
-
-      <main id="page-menu" class="page-hidden">
-        <section class="page-header content-section">
-          <h1 class="content-section__title">Menu Favorit</h1>
-        </section>
-        <section class="product-grid"></section>
-        <section id="testimonials" class="content-section">
-          <h2 class="content-section__title">Kata Mereka</h2>
-          <div class="testimonial-grid">
-            <div
-              class="testimonial-card"
-              data-aos="fade-up"
-              data-aos-delay="100"
-            >
-              <p>
-                "Quantum Quencher-nya benar-benar mengubah cara saya berpikir.
-                Fokus langsung meningkat! Ini bukan sekadar sirup, ini
-                *nootropic* cair."
-              </p>
-              <h4>- Alex P., *Biohacker*</h4>
-            </div>
-            <div
-              class="testimonial-card"
-              data-aos="fade-up"
-              data-aos-delay="200"
-            >
-              <p>
-                "Graviton Fries punya rasio renyah dan lembut yang sempurna
-                secara matematis. Setiap gigitan terasa seperti menghitung
-                *Golden Ratio*."
-              </p>
-              <h4>- Dr. Rina S., *Ahli Fisika Kuliner*</h4>
-            </div>
-            <div
-              class="testimonial-card"
-              data-aos="fade-up"
-              data-aos-delay="300"
-            >
-              <p>
-                "Setelah minum Chrono Fusion Tea, deadline terasa lebih lambat.
-                Efisiensi kerja saya naik 200%. MaMi Cafe meretas waktu."
-              </p>
-              <h4>- Budi W., *Startup Founder*</h4>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      <div class="cart-modal" id="cart-modal">
-        <div class="cart-modal__content">
-          <h2 class="cart-modal__title">Keranjang Anda</h2>
-          <button class="cart-modal__close" id="cart-close-button">
-            &times;
-          </button>
-          <div id="cart-items-container"></div>
-          <div class="cart-modal__summary">
-            <strong>Total:</strong> <span id="cart-total-price">Rp 0</span>
-          </div>
-          <button class="cart-modal__checkout-btn" id="checkout-button">
-            Proses Pesanan
-          </button>
         </div>
+      </section>
+      <section id="tentang" class="content-section" data-aos="fade-in">
+        <h2 class="content-section__title">Tentang Kami</h2>
+        <p>
+          MaMi Cafe adalah tempat nongkrong cozy dan santai, dengan berbagai
+          pilihan menu dari kopi lokal sampai camilan kekinian yang cocok untuk
+          semua suasana.
+        </p>
+      </section>
+      <section id="visi" class="content-section">
+        <h2 class="content-section__title">Visi & Misi</h2>
+
+        <div
+          class="vm-container"
+          style="
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            gap: 4rem;
+            align-items: flex-start;
+          "
+        >
+          <div
+            class="vm-column"
+            style="flex: 1; text-align: left"
+            data-aos="fade-right"
+          >
+            <h3
+              style="
+                color: var(--accent-primary);
+                font-family: var(--font-display);
+                font-size: 1.8rem;
+                margin-bottom: 1.5rem;
+                border-bottom: 1px solid var(--border-color);
+                padding-bottom: 0.75rem;
+              "
+            >
+              Visi
+            </h3>
+            <ul
+              style="list-style: none; padding-left: 0; color: var(--text-dim)"
+            >
+              <li
+                style="
+                  margin-bottom: 1.2rem;
+                  padding-left: 2rem;
+                  position: relative;
+                "
+              >
+                <i
+                  class="ri-radio-button-line"
+                  style="
+                    position: absolute;
+                    left: 0;
+                    top: 5px;
+                    color: var(--accent-primary);
+                    font-size: 1rem;
+                  "
+                ></i>
+                Menjadi bisnis yang sukses dan dikenal banyak orang
+              </li>
+              <li
+                style="
+                  margin-bottom: 1.2rem;
+                  padding-left: 2rem;
+                  position: relative;
+                "
+              >
+                <i
+                  class="ri-radio-button-line"
+                  style="
+                    position: absolute;
+                    left: 0;
+                    top: 5px;
+                    color: var(--accent-primary);
+                    font-size: 1rem;
+                  "
+                ></i>
+                Membangun brand yang dikenal karena
+                <strong>inovasi, kualitas, dan kepuasan pelanggan.</strong>
+              </li>
+              <li style="padding-left: 2rem; position: relative">
+                <i
+                  class="ri-radio-button-line"
+                  style="
+                    position: absolute;
+                    left: 0;
+                    top: 5px;
+                    color: var(--accent-primary);
+                    font-size: 1rem;
+                  "
+                ></i>
+                Menjadi bisnis yang menyediakan snack yang lezat dan berkualitas
+                dengan harga yang terjangkau dan dicintai semua kalangan.
+              </li>
+            </ul>
+          </div>
+          <div
+            class="vm-column"
+            style="flex: 1; text-align: left"
+            data-aos="fade-left"
+          >
+            <h3
+              style="
+                color: var(--accent-primary);
+                font-family: var(--font-display);
+                font-size: 1.8rem;
+                margin-bottom: 1.5rem;
+                border-bottom: 1px solid var(--border-color);
+                padding-bottom: 0.75rem;
+              "
+            >
+              Misi
+            </h3>
+            <ul
+              style="list-style: none; padding-left: 0; color: var(--text-dim)"
+            >
+              <li
+                style="
+                  margin-bottom: 1.2rem;
+                  padding-left: 2rem;
+                  position: relative;
+                "
+              >
+                <i
+                  class="ri-radio-button-line"
+                  style="
+                    position: absolute;
+                    left: 0;
+                    top: 5px;
+                    color: var(--accent-primary);
+                    font-size: 1rem;
+                  "
+                ></i>
+                Menghasilkan produk yang berkualitas dengan harga yang
+                terjangkau.
+              </li>
+              <li
+                style="
+                  margin-bottom: 1.2rem;
+                  padding-left: 2rem;
+                  position: relative;
+                "
+              >
+                <i
+                  class="ri-radio-button-line"
+                  style="
+                    position: absolute;
+                    left: 0;
+                    top: 5px;
+                    color: var(--accent-primary);
+                    font-size: 1rem;
+                  "
+                ></i>
+                Menyediakan layanan pelanggan yang
+                <strong>cepat, ramah, dan responsif.</strong>
+              </li>
+              <li style="padding-left: 2rem; position: relative">
+                <i
+                  class="ri-radio-button-line"
+                  style="
+                    position: absolute;
+                    left: 0;
+                    top: 5px;
+                    color: var(--accent-primary);
+                    font-size: 1rem;
+                  "
+                ></i>
+                Memenuhi permintaan konsumen dan terus berkembang menjadi lebih
+                baik
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="kontak" class="content-section">
+        <h2 class="content-section__title">Hubungi Kami</h2>
+        <p>Email: quantum@mamicafe.com | Instagram: @mamicafe.quantum</p>
+      </section>
+    </main>
+
+    <main id="page-menu" class="page-hidden">
+      <section class="page-header content-section">
+        <h1 class="content-section__title">Menu Favorit</h1>
+      </section>
+      <section class="product-grid"></section>
+      <section id="testimonials" class="content-section">
+        <h2 class="content-section__title">Kata Mereka</h2>
+        <div class="testimonial-grid">
+          <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
+            <p>
+              "Quantum Quencher-nya benar-benar mengubah cara saya berpikir.
+              Fokus langsung meningkat! Ini bukan sekadar sirup, ini *nootropic*
+              cair."
+            </p>
+            <h4>- Alex P., *Biohacker*</h4>
+          </div>
+          <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
+            <p>
+              "Graviton Fries punya rasio renyah dan lembut yang sempurna secara
+              matematis. Setiap gigitan terasa seperti menghitung *Golden
+              Ratio*."
+            </p>
+            <h4>- Dr. Rina S., *Ahli Fisika Kuliner*</h4>
+          </div>
+          <div class="testimonial-card" data-aos="fade-up" data-aos-delay="300">
+            <p>
+              "Setelah minum Chrono Fusion Tea, deadline terasa lebih lambat.
+              Efisiensi kerja saya naik 200%. MaMi Cafe meretas waktu."
+            </p>
+            <h4>- Budi W., *Startup Founder*</h4>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div class="cart-modal" id="cart-modal">
+      <div class="cart-modal__content">
+        <h2 class="cart-modal__title">Keranjang Anda</h2>
+        <button class="cart-modal__close" id="cart-close-button">
+          &times;
+        </button>
+        <div id="cart-items-container"></div>
+        <div class="cart-modal__summary">
+          <strong>Total:</strong>
+          <span id="cart-total-price">Rp 0</span>
+        </div>
+        <button class="cart-modal__checkout-btn" id="checkout-button">
+          Proses Pesanan
+        </button>
       </div>
     </div>
 
     <div id="notification-container" class="notification-toast-container"></div>
+
     <footer class="footer">
       <div class="social-links">
         <a href="#" class="social-link"><i class="ri-instagram-line"></i></a>
@@ -1351,135 +1291,11 @@
       ;(function () {
         'use strict'
 
-        // ======== KONTROL UTAMA APLIKASI ========
-        const GITHUB_TOKEN = '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' // !! GANTI INI !!
-        const REPO_OWNER = 'simon-projek' // !! GANTI INI !!
-        const REPO_NAME = 'kelompok2-projek.github.io' // !! GANTI INI !!
-        const FILE_PATH = 'users.json'
-        const API_URL = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`
-
-        // DOM Elements
-        const authContainer = document.getElementById('auth-container')
-        const secureContent = document.getElementById('secure-content')
         const loadingGate = document.getElementById('loading-gate')
         const progressFill = document.getElementById('progress-fill')
 
         let cart = JSON.parse(localStorage.getItem('MaMiCafeCart')) || []
 
-        // ======== LOGIKA OTENTIKASI ========
-        function setupAuthentication() {
-          const loginForm = document.getElementById('login-form')
-          const signupForm = document.getElementById('signup-form')
-          const warningText = document.getElementById('auth-warning')
-
-          if (sessionStorage.getItem('isLoggedIn') === 'true') {
-            showMainContent()
-            return
-          }
-
-          async function getUserDatabase() {
-            const response = await fetch(
-              `${API_URL}?t=${new Date().getTime()}`,
-              { headers: { Authorization: `token ${GITHUB_TOKEN}` } }
-            )
-            if (!response.ok) {
-              if (response.status === 404) return { sha: null, users: [] }
-              throw new Error('Gagal mengambil database pengguna.')
-            }
-            const data = await response.json()
-            const users = JSON.parse(atob(data.content))
-            return { sha: data.sha, users: users }
-          }
-
-          async function updateUserDatabase(users, sha) {
-            const content = btoa(JSON.stringify(users, null, 2))
-            const body = {
-              message: `DB Update: user action at ${new Date().toISOString()}`,
-              content: content,
-            }
-            if (sha) body.sha = sha
-
-            const response = await fetch(API_URL, {
-              method: 'PUT',
-              headers: {
-                Authorization: `token ${GITHUB_TOKEN}`,
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(body),
-            })
-            if (!response.ok) {
-              const error = await response.json()
-              throw new Error(`Gagal update database: ${error.message}`)
-            }
-          }
-
-          signupForm.addEventListener('submit', async (e) => {
-            e.preventDefault()
-            const username = document
-              .getElementById('signup-username')
-              .value.trim()
-            const password = document
-              .getElementById('signup-password')
-              .value.trim()
-            if (!username || !password)
-              return alert('Username dan password harus diisi.')
-            try {
-              const { sha, users } = await getUserDatabase()
-              if (users.find((u) => u.username === username))
-                return alert('Username sudah ada.')
-              users.push({ username, password })
-              await updateUserDatabase(users, sha)
-              alert('Pendaftaran berhasil! Silakan login.')
-              showLoginForm()
-            } catch (error) {
-              console.error('Signup error:', error)
-              alert('Terjadi kesalahan saat pendaftaran.')
-            }
-          })
-
-          loginForm.addEventListener('submit', async (e) => {
-            e.preventDefault()
-            const username = document
-              .getElementById('login-username')
-              .value.trim()
-            const password = document
-              .getElementById('login-password')
-              .value.trim()
-            try {
-              const { users } = await getUserDatabase()
-              const user = users.find(
-                (u) => u.username === username && u.password === password
-              )
-              if (user) {
-                sessionStorage.setItem('isLoggedIn', 'true')
-                showMainContent()
-              } else {
-                warningText.style.display = 'block'
-              }
-            } catch (error) {
-              console.error('Login error:', error)
-              alert('Gagal terhubung ke server otentikasi.')
-            }
-          })
-
-          function showLoginForm() {
-            signupForm.style.display = 'none'
-            loginForm.style.display = 'block'
-            warningText.style.display = 'none'
-          }
-          function showSignupForm() {
-            loginForm.style.display = 'none'
-            signupForm.style.display = 'block'
-          }
-          document
-            .getElementById('show-signup')
-            .addEventListener('click', showSignupForm)
-          document
-            .getElementById('show-login')
-            .addEventListener('click', showLoginForm)
-        }
-
-        // ======== LOGIKA APLIKASI UTAMA (Setelah Login) ========
         function initializeSystem() {
           let progress = 0
           const loadingSimulation = () => {
@@ -1488,14 +1304,13 @@
             progressFill.style.width = `${progress}%`
 
             if (progress < 100) {
-              setTimeout(loadingSimulation, Math.random() * 50 + 20)
+              setTimeout(loadingSimulation, Math.random() * 100 + 50)
             } else {
               loadingGate.classList.add('gate-hidden')
               loadingGate.addEventListener(
                 'transitionend',
                 () => {
-                  if (window.activateQuantumEffects)
-                    window.activateQuantumEffects()
+                  window.activateQuantumEffects()
                 },
                 { once: true }
               )
@@ -1513,7 +1328,29 @@
         }
 
         function initPageLogic() {
-          AOS.init({ duration: 800, easing: 'ease-in-out', once: true })
+          AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true,
+          })
+
+          const observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add('visible')
+                  observer.unobserve(entry.target)
+                }
+              })
+            },
+            { threshold: 0.1 }
+          )
+          document
+            .querySelectorAll(
+              '.product-card, .hero__title, .hero__subtitle, .hero__cta'
+            )
+            .forEach((el) => observer.observe(el))
+
           const heroBg = document.getElementById('hero-bg')
           if (heroBg) {
             window.addEventListener('mousemove', (e) => {
@@ -1522,6 +1359,7 @@
               heroBg.style.transform = `scale(1.1) translate(${moveX}px, ${moveY}px)`
             })
           }
+
           const navbar = document.getElementById('navbar')
           if (navbar) {
             window.addEventListener('scroll', () => {
@@ -1533,6 +1371,7 @@
         function populateCatalogs() {
           const productGrid = document.querySelector('#page-menu .product-grid')
           if (!productGrid) return
+
           const productSource = [
             {
               id: 1,
@@ -1567,7 +1406,7 @@
               img: 'assets/images/oreo-ciskek-otmil.jpg',
               name: 'Cheesecake Oatmeal',
               desc: 'Puding oat dengan pusaran cheesecake galaksi dan asteroid Oreo. Mengandung asam amino esensial untuk konstruksi realitas.',
-              price: 25000,
+              price: 25000000,
             },
             {
               id: 6,
@@ -1588,19 +1427,19 @@
           productGrid.innerHTML = productSource
             .map(
               (p) => `
-              <div class="product-card" data-aos="fade-up">
+            <div class="product-card" data-aos="fade-up">
                 <img src="${p.img}" alt="${p.name}" loading="lazy">
                 <div class="product-card__content">
-                  <h3 class="product-card__name">${p.name}</h3>
-                  <p class="product-card__desc">${p.desc}</p>
-                  <p class="product-card__price">Rp ${p.price.toLocaleString(
-                    'id-ID'
-                  )}</p>
-                  <button class="product-card__buy-btn" data-id="${
-                    p.id
-                  }">PESAN</button>
+                    <h3 class="product-card__name">${p.name}</h3>
+                    <p class="product-card__desc">${p.desc}</p>
+                    <p class="product-card__price">Rp ${p.price.toLocaleString(
+                      'id-ID'
+                    )}</p>
+                    <button class="product-card__buy-btn" data-id="${
+                      p.id
+                    }">PESAN</button>
                 </div>
-              </div>`
+            </div>`
             )
             .join('')
 
@@ -1610,7 +1449,7 @@
               button.addEventListener('click', () => {
                 const id = parseInt(button.dataset.id)
                 const product = productSource.find((p) => p.id === id)
-                if (product) addToCart(product)
+                addToCart(product)
               })
             })
         }
@@ -1621,17 +1460,35 @@
 
         function showNotification(message, duration = 3000) {
           const container = document.getElementById('notification-container')
+          if (!container) return
+
           const toast = document.createElement('div')
           toast.className = 'notification-toast'
-          toast.innerHTML = `<div class="toast-icon"><i class="ri-check-double-line"></i></div><div class="toast-message">${message}</div><div class="toast-progress" style="animation-duration: ${
-            duration / 1000
-          }s"></div>`
+
+          toast.innerHTML = `
+        <div class="toast-icon">
+            <i class="ri-check-double-line"></i>
+        </div>
+        <div class="toast-message">
+            ${message}
+        </div>
+        <div class="toast-progress" style="animation-duration: ${
+          duration / 1000
+        }s"></div>
+    `
+
           container.appendChild(toast)
+
           setTimeout(() => {
             toast.classList.add('exit')
-            toast.addEventListener('animationend', () => toast.remove(), {
-              once: true,
-            })
+            // Hapus elemen dari DOM setelah animasi keluar selesai
+            toast.addEventListener(
+              'animationend',
+              () => {
+                toast.remove()
+              },
+              { once: true }
+            )
           }, duration)
         }
 
@@ -1645,10 +1502,11 @@
           saveCart()
           renderCart()
           updateCartIcon()
+
           showNotification(
             `<strong>${
               product.name || 'Produk'
-            }</strong> ditambahkan ke keranjang.`
+            } telah ditambahkan ke keranjang!`
           )
         }
 
@@ -1657,7 +1515,7 @@
           if (item) {
             item.quantity += change
             if (item.quantity <= 0) {
-              cart = cart.filter((i) => i.id !== id)
+              cart = cart.filter((item) => item.id !== id)
             }
           }
           saveCart()
@@ -1668,32 +1526,35 @@
         function renderCart() {
           const cartContainer = document.getElementById('cart-items-container')
           const cartTotalElem = document.getElementById('cart-total-price')
+
           if (cart.length === 0) {
             cartContainer.innerHTML =
               '<p style="text-align: center; color: var(--text-dim);">Keranjang Anda kosong.</p>'
             cartTotalElem.textContent = 'Rp 0'
             return
           }
+
           cartContainer.innerHTML = cart
             .map(
               (item) => `
-              <div class="cart-item">
+            <div class="cart-item">
                 <img src="${item.img}" alt="${item.name}">
-                <div class="cart-item__info"><h4>${
-                  item.name
-                }</h4><p>Rp ${item.price.toLocaleString('id-ID')} x ${
+                <div class="cart-item__info">
+                    <h4>${item.name}</h4>
+                    <p>Rp ${item.price.toLocaleString('id-ID')} x ${
                 item.quantity
-              }</p></div>
-                <div class="cart-item__actions">
-                  <button class="quantity-change" data-id="${
-                    item.id
-                  }" data-change="-1">-</button>
-                  <span>${item.quantity}</span>
-                  <button class="quantity-change" data-id="${
-                    item.id
-                  }" data-change="1">+</button>
+              }</p>
                 </div>
-              </div>`
+                <div class="cart-item__actions">
+                    <button class="quantity-change" data-id="${
+                      item.id
+                    }" data-change="-1">-</button>
+                    <span>${item.quantity}</span>
+                    <button class="quantity-change" data-id="${
+                      item.id
+                    }" data-change="1">+</button>
+                </div>
+            </div>`
             )
             .join('')
 
@@ -1702,12 +1563,12 @@
             0
           )
           cartTotalElem.textContent = `Rp ${total.toLocaleString('id-ID')}`
+
           document.querySelectorAll('.quantity-change').forEach((button) => {
             button.addEventListener('click', () => {
-              updateCart(
-                parseInt(button.dataset.id),
-                parseInt(button.dataset.change)
-              )
+              const id = parseInt(button.dataset.id)
+              const change = parseInt(button.dataset.change)
+              updateCart(id, change)
             })
           })
         }
@@ -1716,65 +1577,63 @@
           const badge = document.querySelector('.cart-badge')
           const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0)
           badge.textContent = totalItems
-          if (totalItems > 0) {
-            badge.style.transform = 'scale(1.3)'
-            setTimeout(() => {
-              badge.style.transform = 'scale(1)'
-            }, 200)
-          }
+          badge.style.transform = 'scale(1.3)'
+          setTimeout(() => {
+            badge.style.transform = 'scale(1)'
+          }, 200)
         }
 
         function setupCartModal() {
+          const cartButton = document.getElementById('cart-button')
+          const closeButton = document.getElementById('cart-close-button')
           const cartModal = document.getElementById('cart-modal')
-          document
-            .getElementById('cart-button')
-            .addEventListener('click', (e) => {
-              e.preventDefault()
-              renderCart()
-              cartModal.classList.add('active')
-            })
-          document
-            .getElementById('cart-close-button')
-            .addEventListener('click', () =>
-              cartModal.classList.remove('active')
-            )
-          cartModal.addEventListener('click', (e) => {
-            if (e.target === cartModal) cartModal.classList.remove('active')
-          })
-          document
-            .getElementById('checkout-button')
-            .addEventListener('click', () => {
-              if (cart.length === 0) return alert('Keranjang Anda kosong!')
-              const total = cart.reduce(
-                (sum, item) => sum + item.price * item.quantity,
-                0
-              )
-              let message = `Halo MaMi Cafe, saya ingin memesan:\n\n${cart
-                .map(
-                  (item) =>
-                    `${item.name} (x${item.quantity}) - Rp ${(
-                      item.price * item.quantity
-                    ).toLocaleString('id-ID')}`
-                )
-                .join('\n')}\n\n*Total: Rp ${total.toLocaleString('id-ID')}*`
-              window.open(
-                `https://wa.me/6282297970015?text=${encodeURIComponent(
-                  message
-                )}`,
-                '_blank'
-              ) // Ganti nomor WA
-              cart = []
-              saveCart()
-              renderCart()
-              updateCartIcon()
-              cartModal.classList.remove('active')
-            })
-        }
+          const checkoutButton = document.getElementById('checkout-button')
 
-        function showMainContent() {
-          authContainer.style.display = 'none'
-          secureContent.style.display = 'block'
-          initializeSystem()
+          cartButton.addEventListener('click', (e) => {
+            e.preventDefault()
+            renderCart()
+            cartModal.classList.add('active')
+          })
+
+          closeButton.addEventListener('click', () => {
+            cartModal.classList.remove('active')
+          })
+
+          cartModal.addEventListener('click', (e) => {
+            if (e.target === cartModal) {
+              cartModal.classList.remove('active')
+            }
+          })
+
+          checkoutButton.addEventListener('click', () => {
+            if (cart.length === 0) {
+              alert('Keranjang Anda kosong!')
+              return
+            }
+            const total = cart.reduce(
+              (sum, item) => sum + item.price * item.quantity,
+              0
+            )
+            let message = 'Halo MaMi Cafe, saya ingin memesan:\n\n'
+            cart.forEach((item) => {
+              message += `${item.name} (x${item.quantity}) - Rp ${(
+                item.price * item.quantity
+              ).toLocaleString('id-ID')}\n`
+            })
+            message += `\n*Total: Rp ${total.toLocaleString('id-ID')}*`
+
+            const encodedMessage = encodeURIComponent(message)
+
+            const whatsappURL = `https://wa.me/6282297970015?text=${encodedMessage}`
+
+            window.open(whatsappURL, '_blank')
+
+            cart = []
+            saveCart()
+            renderCart()
+            updateCartIcon()
+            cartModal.classList.remove('active')
+          })
         }
 
         window.activateQuantumEffects = () => {
@@ -1789,17 +1648,21 @@
               const target = e.currentTarget.dataset.target
               document.body.style.transition = 'opacity 0.3s ease-out'
               document.body.style.opacity = '0'
+
               setTimeout(() => {
                 const targetPageId = target.startsWith('page-home-')
                   ? 'page-home'
                   : target
                 showPage(targetPageId)
                 window.scrollTo({ top: 0, behavior: 'auto' })
+
                 if (target.startsWith('page-home-')) {
+                  const anchorId = target.substring('page-home-'.length)
                   document
-                    .getElementById(target.substring('page-home-'.length))
+                    .getElementById(anchorId)
                     ?.scrollIntoView({ behavior: 'smooth' })
                 }
+
                 document.body.style.opacity = '1'
               }, 300)
             })
@@ -1807,8 +1670,11 @@
           showPage('page-home')
         }
 
-        // Inisialisasi utama
-        document.addEventListener('DOMContentLoaded', setupAuthentication)
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initializeSystem)
+        } else {
+          initializeSystem()
+        }
       })()
     </script>
   </body>
